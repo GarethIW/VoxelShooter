@@ -26,32 +26,22 @@ namespace VoxelShooter
 
         public VoxelWorld()
         {
-            Init(true);
+            Init();
         }
-        public VoxelWorld(int xs, int ys, int zs, bool createGround)
+        public VoxelWorld(int xs, int ys, int zs)
         {
             X_CHUNKS = xs;
             Y_CHUNKS = ys;
             Z_CHUNKS = zs;
 
-            Init(createGround);
+            Init();
         }
 
-        void Init(bool createGround)
+        void Init()
         {
             Chunks = new Chunk[X_CHUNKS, Y_CHUNKS, Z_CHUNKS];
 
-            for (int x = 0; x < X_CHUNKS; x++)
-            {
-                for (int y = 0; y < Y_CHUNKS; y++)
-                {
-                    for (int z = 0; z < Z_CHUNKS; z++)
-                    {
-                        Chunks[x, y, z] = new Chunk(this, x, y, z, createGround);
-                    }
-                }
-            }
-
+           
             X_SIZE = X_CHUNKS * Chunk.X_SIZE;
             Y_SIZE = Y_CHUNKS * Chunk.Y_SIZE;
             Z_SIZE = Z_CHUNKS * Chunk.Z_SIZE;
@@ -82,6 +72,7 @@ namespace VoxelShooter
                 for (int x = 0; x < X_CHUNKS; x++)
                 {
                     Chunk c = Chunks[x, y, 0];
+                    if (c == null) continue;
                     if (!gameCamera.boundingFrustum.Intersects(c.boundingSphere))//.Transform(Matrix.CreateTranslation(-gameCamera.Position))))
                     {
                         if (c.Visible)
@@ -156,6 +147,8 @@ namespace VoxelShooter
                     }
                 }
             }
+
+            AddToUpdateQueue(GetChunkAtWorldPosition(x,y,z));
         }
 
         public void UpdateWorldMeshes()
@@ -178,6 +171,8 @@ namespace VoxelShooter
             if (x < 0 || y < 0 || z < 0 || x >= X_SIZE || y >= Y_SIZE || z >= Z_SIZE) return;
 
             Chunk c = GetChunkAtWorldPosition(x, y, z);
+
+            
 
             c.SetVoxel(x - ((x / Chunk.X_SIZE) * Chunk.X_SIZE), y - ((y / Chunk.Y_SIZE) * Chunk.Y_SIZE), z - ((z / Chunk.Z_SIZE) * Chunk.Z_SIZE), active, destruct, type, top, side);
 
@@ -242,6 +237,11 @@ namespace VoxelShooter
         public Chunk GetChunkAtWorldPosition(int x, int y, int z)
         {
             if (x < 0 || y < 0 || z < 0 || x >= X_SIZE || y >= Y_SIZE || z >= Z_SIZE) return null;
+
+            if (Chunks[x / Chunk.X_SIZE, y / Chunk.Y_SIZE, z / Chunk.Z_SIZE] == null)
+            {
+                Chunks[x / Chunk.X_SIZE, y / Chunk.Y_SIZE, z / Chunk.Z_SIZE] = new Chunk(this, x / Chunk.X_SIZE, y / Chunk.Y_SIZE, z / Chunk.Z_SIZE, false);
+            }
 
             return Chunks[x / Chunk.X_SIZE, y / Chunk.Y_SIZE, z / Chunk.Z_SIZE];
         }

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.IO;
 
 namespace VoxelShooter
 {
@@ -18,6 +19,15 @@ namespace VoxelShooter
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        VoxelSprite tilesSprite;
+        VoxelWorld gameWorld;
+
+        Camera gameCamera;
+
+        BasicEffect drawEffect;
+
+        ParticleController particleController;
 
         public VoxelShooter()
         {
@@ -33,7 +43,9 @@ namespace VoxelShooter
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 768;
+            graphics.ApplyChanges();
 
             base.Initialize();
         }
@@ -44,10 +56,32 @@ namespace VoxelShooter
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            tilesSprite = new VoxelSprite(16, 16, 16);
+            LoadVoxels.LoadSprite(Path.Combine(Content.RootDirectory, "tiles.vxs"), ref tilesSprite);
+
+            gameWorld = new VoxelWorld(100, 10, 1);
+
+            gameWorld.CopySprite(0, 0, 0, tilesSprite.AnimChunks[0]);
+            gameWorld.CopySprite(0, 5, 0, tilesSprite.AnimChunks[0]);
+            gameWorld.CopySprite(0, 9, 0, tilesSprite.AnimChunks[0]);
+
+
+
+            gameCamera = new Camera(GraphicsDevice, GraphicsDevice.Viewport);
+            gameCamera.Position = new Vector3(0f, gameWorld.Y_SIZE * Voxel.HALF_SIZE, 0f);
+            gameCamera.Target = gameCamera.Position;
+
+            particleController = new ParticleController(GraphicsDevice);
+
+            drawEffect = new BasicEffect(GraphicsDevice)
+            {
+                World = gameCamera.worldMatrix,
+                View = gameCamera.viewMatrix,
+                Projection = gameCamera.projectionMatrix,
+                VertexColorEnabled = true,
+            };
         }
 
         /// <summary>
@@ -70,7 +104,16 @@ namespace VoxelShooter
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            if (Helper.Random.Next(10) == 1)
+            {
+                particleController.Spawn(Vector3.Zero, new Vector3(-0.1f, 0f, 0f), 0.5f, Color.White, 10000, false);
+            }
+
+            gameCamera.Update(gameTime, gameWorld);
+            gameWorld.Update(gameTime, gameCamera);
+            particleController.Update(gameTime, gameCamera, gameWorld);
+
+            drawEffect.View = gameCamera.viewMatrix;
 
             base.Update(gameTime);
         }
@@ -81,9 +124,33 @@ namespace VoxelShooter
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+            GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
-            // TODO: Add your drawing code here
+            foreach (EffectPass pass in drawEffect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+
+                for (int y = 0; y < gameWorld.Y_CHUNKS; y++)
+                {
+                    for (int x = 0; x < gameWorld.X_CHUNKS; x++)
+                    {
+                        Chunk c = gameWorld.Chunks[x, y, 0];
+                        if (c == null) continue;
+                        if (!c.Visible) continue;
+
+                        if (c == null || c.VertexArray==null || c.VertexArray.Length == 0) continue;
+                        if (!gameCamera.boundingFrustum.Intersects(c.boundingSphere)) continue;
+                        GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalColor>(PrimitiveType.TriangleList, c.VertexArray, 0, c.VertexArray.Length, c.IndexArray, 0, c.VertexArray.Length / 2);
+                    }
+                }
+            }
+
+            // gameSquad.Draw(GraphicsDevice);
+
+            particleController.Draw();
 
             base.Draw(gameTime);
         }

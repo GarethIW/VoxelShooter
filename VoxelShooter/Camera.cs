@@ -22,7 +22,7 @@ namespace VoxelShooter
         public float Roll = MathHelper.Pi;
         public float Pitch = -0.2f;
 
-        public Vector3 Offset = new Vector3(0, 40, -40f);
+        public Vector3 Offset = new Vector3(0, 0, 0f);
         //public Vector3 Offset = new Vector3(0, 0f, -30f);
 
         const float moveSpeed = 0.05f;
@@ -31,7 +31,7 @@ namespace VoxelShooter
         {
             worldMatrix = Matrix.CreateWorld(Vector3.Zero, Vector3.Forward, Vector3.Up);
             Matrix cameraRotation = Matrix.CreateRotationZ(Roll) * Matrix.CreateRotationX(Pitch) * Matrix.CreateRotationY(Yaw);
-            viewMatrix = Matrix.CreateLookAt(new Vector3(0,20,-30), new Vector3(0, 0, 0), Vector3.Down);
+            viewMatrix = Matrix.CreateLookAt(new Vector3(0,0,-150), new Vector3(0, 0, 0), Vector3.Down);
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, vp.AspectRatio, 0.1f, 200f);
 
             boundingFrustum = new BoundingFrustum(viewMatrix * projectionMatrix);
@@ -39,9 +39,9 @@ namespace VoxelShooter
           
         }
 
-        public void Update(GameTime gameTime, VoxelWorld gameWorld, Vector3 shake)
+        public void Update(GameTime gameTime, VoxelWorld gameWorld)
         {
-            Offset = new Vector3(0, 60, -50);// -(new Vector3(0, Position.Z, -Position.Z) * 0.3f);
+            //Offset = new Vector3(0, 60, -50);// -(new Vector3(0, Position.Z, -Position.Z) * 0.3f);
             //Offset = new Vector3(0, 20, -10);// - (new Vector3(0,Position.Z,-Position.Z) * 0.3f);
             //Position = Vector3.Clamp(Position, gameWorld.ToScreenSpace(140, 115, 0), gameWorld.ToScreenSpace(gameWorld.X_SIZE - 140, gameWorld.Y_SIZE - 90, 20));
             //Position = Vector3.Clamp(Position, new Vector3(70, 60, 0), gameWorld.ToScreenSpace(gameWorld.X_SIZE, gameWorld.Y_SIZE, 0) - new Vector3(100, 60, 50));
@@ -51,7 +51,7 @@ namespace VoxelShooter
 
 
 
-            viewMatrix = Matrix.CreateLookAt(Position + Offset, Position + new Vector3(0, 20, 0) + shake, Vector3.Down);
+            //viewMatrix = Matrix.CreateLookAt(Position + Offset, Position, Vector3.Down);
             //viewMatrix = Matrix.CreateLookAt(Position + Offset, Position + new Vector3(0, 0, 0), Vector3.Down);
             boundingFrustum.Matrix = viewMatrix * projectionMatrix;
         }

@@ -108,6 +108,23 @@ namespace VoxelShooter
             Updated = false;
         }
 
+        public void CopySprite(int x, int y, int z, AnimChunk c)
+        {
+            for (int xx = 0; xx < c.X_SIZE; xx++)
+            {
+                for (int yy = 0; yy < c.Y_SIZE; yy++)
+                {
+                    for (int zz = 0; zz < c.Z_SIZE; zz++)
+                    {
+                        if (c.Voxels[xx, yy, zz].Active)
+                        {
+                            SetVoxel(x + xx, y + ((c.Z_SIZE - 1) - zz), z + yy, true, 0, VoxelType.Prefab, c.Voxels[xx, yy, zz].Color, new Color(c.Voxels[xx, yy, zz].Color.ToVector3() * 0.5f));
+                        }
+                    }
+                }
+            }
+        }
+
         bool[] lightingDirs = new bool[9];
         Color CalcLighting(int x, int y, int z, Color currentColor)
         {
