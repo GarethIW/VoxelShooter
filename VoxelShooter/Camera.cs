@@ -22,7 +22,7 @@ namespace VoxelShooter
         public float Roll = MathHelper.Pi;
         public float Pitch = -0.2f;
 
-        public Vector3 Offset = new Vector3(0, 0, 0f);
+        public Vector3 Offset = new Vector3(0, 0, -100f);
         //public Vector3 Offset = new Vector3(0, 0f, -30f);
 
         const float moveSpeed = 0.05f;
@@ -47,11 +47,11 @@ namespace VoxelShooter
             //Position = Vector3.Clamp(Position, new Vector3(70, 60, 0), gameWorld.ToScreenSpace(gameWorld.X_SIZE, gameWorld.Y_SIZE, 0) - new Vector3(100, 60, 50));
             //Target = Vector3.Clamp(Target, gameWorld.ToScreenSpace(140, 115, 0), gameWorld.ToScreenSpace(gameWorld.X_SIZE - 140, gameWorld.Y_SIZE - 90, 20));
             Position = Vector3.Lerp(Position, Target, moveSpeed);
-            //worldMatrix = Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
+            //worldMatrix = Matrix.CreateWorld(-Position, Vector3.Forward, Vector3.Up);
 
 
 
-            //viewMatrix = Matrix.CreateLookAt(Position + Offset, Position, Vector3.Down);
+            viewMatrix = Matrix.CreateLookAt(Position + Offset, Position, Vector3.Down);
             //viewMatrix = Matrix.CreateLookAt(Position + Offset, Position + new Vector3(0, 0, 0), Vector3.Down);
             boundingFrustum.Matrix = viewMatrix * projectionMatrix;
         }

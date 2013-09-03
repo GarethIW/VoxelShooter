@@ -88,7 +88,7 @@ namespace VoxelShooter
                         if (!IsVoxelAt(x - 1, y, z)) MakeQuad(worldOffset, new Vector3(-Voxel.HALF_SIZE, -Voxel.HALF_SIZE, -Voxel.HALF_SIZE), new Vector3(-Voxel.HALF_SIZE, Voxel.HALF_SIZE, -Voxel.HALF_SIZE), new Vector3(-Voxel.HALF_SIZE, Voxel.HALF_SIZE, Voxel.HALF_SIZE), new Vector3(-Voxel.HALF_SIZE, -Voxel.HALF_SIZE, Voxel.HALF_SIZE), new Vector3(-1f, 0f, 0f), CalcLighting(x - 1, y, z, new Color(Voxels[x, y, z].SR, Voxels[x, y, z].SG, Voxels[x, y, z].SB)));
                         if (!IsVoxelAt(x + 1, y, z)) MakeQuad(worldOffset, new Vector3(Voxel.HALF_SIZE, Voxel.HALF_SIZE, Voxel.HALF_SIZE), new Vector3(Voxel.HALF_SIZE, Voxel.HALF_SIZE, -Voxel.HALF_SIZE), new Vector3(Voxel.HALF_SIZE, -Voxel.HALF_SIZE, -Voxel.HALF_SIZE), new Vector3(Voxel.HALF_SIZE, -Voxel.HALF_SIZE, Voxel.HALF_SIZE), new Vector3(1f, 0f, 0f), CalcLighting(x + 1, y, z, new Color(Voxels[x, y, z].SR, Voxels[x, y, z].SG, Voxels[x, y, z].SB)));
                         if (!IsVoxelAt(x, y + 1, z)) MakeQuad(worldOffset, new Vector3(-Voxel.HALF_SIZE, Voxel.HALF_SIZE, -Voxel.HALF_SIZE), new Vector3(Voxel.HALF_SIZE, Voxel.HALF_SIZE, -Voxel.HALF_SIZE), new Vector3(Voxel.HALF_SIZE, Voxel.HALF_SIZE, Voxel.HALF_SIZE), new Vector3(-Voxel.HALF_SIZE, Voxel.HALF_SIZE, Voxel.HALF_SIZE), new Vector3(0f, 1f, 0f), CalcLighting(x, y + 1, z, new Color(Voxels[x, y, z].SR, Voxels[x, y, z].SG, Voxels[x, y, z].SB)));
-                        //if (!IsVoxelAt(x, y - 1, z)) MakeQuad(worldOffset, new Vector3(Voxel.HALF_SIZE, -Voxel.HALF_SIZE, Voxel.HALF_SIZE), new Vector3(Voxel.HALF_SIZE, -Voxel.HALF_SIZE, -Voxel.HALF_SIZE), new Vector3(-Voxel.HALF_SIZE, -Voxel.HALF_SIZE, -Voxel.HALF_SIZE), new Vector3(-Voxel.HALF_SIZE, -Voxel.HALF_SIZE, Voxel.HALF_SIZE), new Vector3(0f, 0f, -1f), CalcLighting(x, y-1, z, Voxels[x, y, z].SideColor)); 
+                        if (!IsVoxelAt(x, y - 1, z)) MakeQuad(worldOffset, new Vector3(Voxel.HALF_SIZE, -Voxel.HALF_SIZE, Voxel.HALF_SIZE), new Vector3(Voxel.HALF_SIZE, -Voxel.HALF_SIZE, -Voxel.HALF_SIZE), new Vector3(-Voxel.HALF_SIZE, -Voxel.HALF_SIZE, -Voxel.HALF_SIZE), new Vector3(-Voxel.HALF_SIZE, -Voxel.HALF_SIZE, Voxel.HALF_SIZE), new Vector3(0f, 0f, -1f), CalcLighting(x, y - 1, z, new Color(Voxels[x, y, z].SR, Voxels[x, y, z].SG, Voxels[x, y, z].SB))); 
                     }
 
             VertexArray = parentWorld.Vertices.ToArray();
@@ -179,27 +179,33 @@ namespace VoxelShooter
 
             if (x < 0)
                 if (worldX == 0) return false;
-                else return parentWorld.Chunks[worldX - 1, worldY, worldZ].IsVoxelAt(X_SIZE + x, y, z);
+                else if (parentWorld.Chunks[worldX - 1, worldY, worldZ] != null) return parentWorld.Chunks[worldX - 1, worldY, worldZ].IsVoxelAt(X_SIZE + x, y, z);
+                else return false;
 
             if (x >= X_SIZE)
                 if (worldX >= parentWorld.X_CHUNKS - 1) return false;
-                else return parentWorld.Chunks[worldX + 1, worldY, worldZ].IsVoxelAt(x-X_SIZE, y, z);
+                else if (parentWorld.Chunks[worldX + 1, worldY, worldZ]!=null) return parentWorld.Chunks[worldX + 1, worldY, worldZ].IsVoxelAt(x-X_SIZE, y, z);
+                else return false;
 
             if (y < 0)
                 if (worldY == 0) return false;
-                else return parentWorld.Chunks[worldX, worldY - 1, worldZ].IsVoxelAt(x, Y_SIZE + y, z);
+                else if (parentWorld.Chunks[worldX, worldY - 1, worldZ]!=null) return parentWorld.Chunks[worldX, worldY - 1, worldZ].IsVoxelAt(x, Y_SIZE + y, z);
+                else return false;
 
             if (y >= Y_SIZE)
                 if (worldY >= parentWorld.Y_CHUNKS - 1) return false;
-                else return parentWorld.Chunks[worldX, worldY + 1, worldZ].IsVoxelAt(x, y-Y_SIZE, z);
+                else if (parentWorld.Chunks[worldX, worldY + 1, worldZ]!=null) return parentWorld.Chunks[worldX, worldY + 1, worldZ].IsVoxelAt(x, y-Y_SIZE, z);
+                else return false;
 
             if (z < 0)
                 if (worldZ == 0) return false;
-                else return parentWorld.Chunks[worldX, worldY, worldZ - 1].IsVoxelAt(x, y, Z_SIZE+ z);
+                else if (parentWorld.Chunks[worldX, worldY, worldZ - 1]!=null) return parentWorld.Chunks[worldX, worldY, worldZ - 1].IsVoxelAt(x, y, Z_SIZE+ z);
+                else return false;
 
             if (z >= Z_SIZE)
                 if (worldZ >= parentWorld.Z_CHUNKS - 1) return false;
-                else return parentWorld.Chunks[worldX, worldY, worldZ + 1].IsVoxelAt(x, y, z-Z_SIZE);
+                else if (parentWorld.Chunks[worldX, worldY, worldZ + 1]!= null) return parentWorld.Chunks[worldX, worldY, worldZ + 1].IsVoxelAt(x, y, z - Z_SIZE);
+                else return false;
 
             return false;
         }

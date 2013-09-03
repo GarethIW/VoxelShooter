@@ -64,8 +64,8 @@ namespace VoxelShooter
             gameWorld = new VoxelWorld(100, 10, 1);
 
             gameWorld.CopySprite(0, 0, 0, tilesSprite.AnimChunks[0]);
-            gameWorld.CopySprite(0, 5, 0, tilesSprite.AnimChunks[0]);
-            gameWorld.CopySprite(0, 9, 0, tilesSprite.AnimChunks[0]);
+            gameWorld.CopySprite(0, 5*Chunk.Y_SIZE, 0, tilesSprite.AnimChunks[1]);
+            gameWorld.CopySprite(0, 9*Chunk.Y_SIZE, 0, tilesSprite.AnimChunks[0]);
 
 
 
@@ -106,7 +106,9 @@ namespace VoxelShooter
 
             if (Helper.Random.Next(10) == 1)
             {
-                particleController.Spawn(Vector3.Zero, new Vector3(-0.1f, 0f, 0f), 0.5f, Color.White, 10000, false);
+                Vector3 pos = new Vector3(40f, -15f+((float)Helper.Random.NextDouble()*30f), -2f + ((float)Helper.Random.NextDouble()*4f));
+                Vector3 col = (Vector3.One * 0.5f) + (Vector3.One*((float)Helper.Random.NextDouble()*0.5f));
+                particleController.Spawn(pos, new Vector3(-0.1f-((float)Helper.Random.NextDouble()*1f), 0f, 0f), 0.5f, new Color(col), 10000, false);
             }
 
             gameCamera.Update(gameTime, gameWorld);
