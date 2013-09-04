@@ -77,7 +77,11 @@ namespace VoxelShooter
                     {
                         if (c.Visible)
                         {
-                            c.Visible = false;
+                            if (c.worldX * Chunk.X_SIZE * Voxel.SIZE < gameCamera.Position.X)
+                            {
+                                Chunks[x,y,0]=null;
+                            }
+                            else c.Visible = false;
                             //c.ClearMem();
                         }
                     }
@@ -149,6 +153,8 @@ namespace VoxelShooter
             }
 
             AddToUpdateQueue(GetChunkAtWorldPosition(x,y,z));
+            if(x>Chunk.X_SIZE) AddToUpdateQueue(GetChunkAtWorldPosition(x-1, y, z));
+
         }
 
         public void UpdateWorldMeshes()

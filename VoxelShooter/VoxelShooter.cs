@@ -28,6 +28,10 @@ namespace VoxelShooter
         BasicEffect drawEffect;
 
         ParticleController particleController;
+        Starfield gameStarfield;
+
+        float scrollDist = 0f;
+        int scrollColumn;
 
         public VoxelShooter()
         {
@@ -61,12 +65,13 @@ namespace VoxelShooter
             tilesSprite = new VoxelSprite(16, 16, 16);
             LoadVoxels.LoadSprite(Path.Combine(Content.RootDirectory, "tiles.vxs"), ref tilesSprite);
 
-            gameWorld = new VoxelWorld(100, 10, 1);
+            gameWorld = new VoxelWorld(100, 11, 1);
 
-            gameWorld.CopySprite(0, 0, 0, tilesSprite.AnimChunks[0]);
-            gameWorld.CopySprite(0, 5*Chunk.Y_SIZE, 0, tilesSprite.AnimChunks[1]);
-            gameWorld.CopySprite(0, 9*Chunk.Y_SIZE, 0, tilesSprite.AnimChunks[0]);
+            for(int yy=0;yy<11;yy++)
+                for(int xx=0;xx<12;xx++)
+                    if(Helper.Random.Next(5)==1) gameWorld.CopySprite(xx*Chunk.X_SIZE, yy*Chunk.Y_SIZE, 0, tilesSprite.AnimChunks[Helper.Random.Next(2)]);
 
+            scrollColumn = 12;
 
 
             gameCamera = new Camera(GraphicsDevice, GraphicsDevice.Viewport);
@@ -74,6 +79,7 @@ namespace VoxelShooter
             gameCamera.Target = gameCamera.Position;
 
             particleController = new ParticleController(GraphicsDevice);
+            gameStarfield = new Starfield(GraphicsDevice);
 
             drawEffect = new BasicEffect(GraphicsDevice)
             {
@@ -106,16 +112,31 @@ namespace VoxelShooter
 
             if (Helper.Random.Next(10) == 1)
             {
-                Vector3 pos = new Vector3(40f, -15f+((float)Helper.Random.NextDouble()*30f), -2f + ((float)Helper.Random.NextDouble()*4f));
+                Vector3 pos = new Vector3(100f, -50f+((float)Helper.Random.NextDouble()*100f), 5f + ((float)Helper.Random.NextDouble()*10f));
                 Vector3 col = (Vector3.One * 0.5f) + (Vector3.One*((float)Helper.Random.NextDouble()*0.5f));
-                particleController.Spawn(pos, new Vector3(-0.1f-((float)Helper.Random.NextDouble()*1f), 0f, 0f), 0.5f, new Color(col), 10000, false);
+                gameStarfield.Spawn(pos, new Vector3(-0.1f-((float)Helper.Random.NextDouble()*1f), 0f, 0f), 0.5f, new Color(col), 20000, false);
+            }
+
+            if (scrollColumn < gameWorld.X_CHUNKS - 2)
+            {
+                gameCamera.Target.X += 0.1f;
+                scrollDist += 0.1f;
+                if (scrollDist >= Chunk.X_SIZE * Voxel.SIZE)
+                {
+                    scrollDist = 0f;
+                    for (int yy = 0; yy < 11; yy++)
+                        if (Helper.Random.Next(5) == 1) gameWorld.CopySprite(scrollColumn * Chunk.X_SIZE, yy * Chunk.Y_SIZE, 0, tilesSprite.AnimChunks[Helper.Random.Next(2)]);
+                    scrollColumn++;
+                }
             }
 
             gameCamera.Update(gameTime, gameWorld);
             gameWorld.Update(gameTime, gameCamera);
             particleController.Update(gameTime, gameCamera, gameWorld);
+            gameStarfield.Update(gameTime, gameCamera, gameWorld);
 
             drawEffect.View = gameCamera.viewMatrix;
+            drawEffect.World = gameCamera.worldMatrix;
 
             base.Update(gameTime);
         }
@@ -130,6 +151,8 @@ namespace VoxelShooter
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
+
+            gameStarfield.Draw();
 
             foreach (EffectPass pass in drawEffect.CurrentTechnique.Passes)
             {
