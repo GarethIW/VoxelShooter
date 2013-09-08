@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Hero.cs" />
     <Compile Include="Starfield.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Particle.cs" />
@@ -97,6 +98,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TiledLib\TiledLib.csproj">
+      <Project>{82da5033-4dc2-491c-b7f9-8c39b58e0be7}</Project>
+      <Name>TiledLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VoxelShooterContent\VoxelShooterContent.contentproj">
       <Name>VoxelShooterContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>

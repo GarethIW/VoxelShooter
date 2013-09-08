@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.IO;
+using TiledLib;
 
 namespace VoxelShooter
 {
@@ -30,7 +31,13 @@ namespace VoxelShooter
         ParticleController particleController;
         Starfield gameStarfield;
 
+        Map gameMap;
+        TileLayer tileLayer;
+
+        Hero gameHero;
+
         float scrollDist = 0f;
+        float scrollPos = 0f;
         int scrollColumn;
 
         public VoxelShooter()
@@ -67,16 +74,21 @@ namespace VoxelShooter
 
             gameWorld = new VoxelWorld(100, 11, 1);
 
+            gameMap = Content.Load<Map>("1");
+            tileLayer = (TileLayer)gameMap.GetLayer("tiles");
+
             for(int yy=0;yy<11;yy++)
                 for(int xx=0;xx<12;xx++)
-                    if(Helper.Random.Next(5)==1) gameWorld.CopySprite(xx*Chunk.X_SIZE, yy*Chunk.Y_SIZE, 0, tilesSprite.AnimChunks[Helper.Random.Next(2)]);
+                    if(tileLayer.Tiles[xx,yy]!=null) gameWorld.CopySprite(xx*Chunk.X_SIZE, yy*Chunk.Y_SIZE, 0, tilesSprite.AnimChunks[tileLayer.Tiles[xx,yy].Index-1]);
 
             scrollColumn = 12;
-
 
             gameCamera = new Camera(GraphicsDevice, GraphicsDevice.Viewport);
             gameCamera.Position = new Vector3(0f, gameWorld.Y_SIZE * Voxel.HALF_SIZE, 0f);
             gameCamera.Target = gameCamera.Position;
+
+            gameHero = new Hero();
+            gameHero.LoadContent(Content, GraphicsDevice);
 
             particleController = new ParticleController(GraphicsDevice);
             gameStarfield = new Starfield(GraphicsDevice);
@@ -121,17 +133,21 @@ namespace VoxelShooter
             {
                 gameCamera.Target.X += 0.1f;
                 scrollDist += 0.1f;
+                scrollPos += 0.1f;
                 if (scrollDist >= Chunk.X_SIZE * Voxel.SIZE)
                 {
                     scrollDist = 0f;
                     for (int yy = 0; yy < 11; yy++)
-                        if (Helper.Random.Next(5) == 1) gameWorld.CopySprite(scrollColumn * Chunk.X_SIZE, yy * Chunk.Y_SIZE, 0, tilesSprite.AnimChunks[Helper.Random.Next(2)]);
+                        if (tileLayer.Tiles[scrollColumn, yy] != null) gameWorld.CopySprite(scrollColumn * Chunk.X_SIZE, yy * Chunk.Y_SIZE, 0, tilesSprite.AnimChunks[tileLayer.Tiles[scrollColumn, yy].Index - 1]);
                     scrollColumn++;
                 }
             }
 
             gameCamera.Update(gameTime, gameWorld);
             gameWorld.Update(gameTime, gameCamera);
+
+            gameHero.Update(gameTime, gameCamera, scrollPos);
+
             particleController.Update(gameTime, gameCamera, gameWorld);
             gameStarfield.Update(gameTime, gameCamera, gameWorld);
 
@@ -173,7 +189,7 @@ namespace VoxelShooter
                 }
             }
 
-            // gameSquad.Draw(GraphicsDevice);
+            gameHero.Draw(GraphicsDevice);
 
             particleController.Draw();
 
