@@ -36,9 +36,15 @@ namespace VoxelShooter
 
         Hero gameHero;
 
+        float scrollSpeed = 0.5f;
         float scrollDist = 0f;
         float scrollPos = 0f;
+
         int scrollColumn;
+
+        MouseState lms;
+        KeyboardState lks;
+        GamePadState lgs;
 
         public VoxelShooter()
         {
@@ -55,7 +61,7 @@ namespace VoxelShooter
         protected override void Initialize()
         {
             graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 768;
+            graphics.PreferredBackBufferHeight = 720;
             graphics.ApplyChanges();
 
             base.Initialize();
@@ -72,10 +78,10 @@ namespace VoxelShooter
             tilesSprite = new VoxelSprite(16, 16, 16);
             LoadVoxels.LoadSprite(Path.Combine(Content.RootDirectory, "tiles.vxs"), ref tilesSprite);
 
-            gameWorld = new VoxelWorld(100, 11, 1);
-
             gameMap = Content.Load<Map>("1");
             tileLayer = (TileLayer)gameMap.GetLayer("tiles");
+
+            gameWorld = new VoxelWorld(gameMap.Width, 11, 1);
 
             for(int yy=0;yy<11;yy++)
                 for(int xx=0;xx<12;xx++)
@@ -129,12 +135,13 @@ namespace VoxelShooter
                 gameStarfield.Spawn(pos, new Vector3(-0.1f-((float)Helper.Random.NextDouble()*1f), 0f, 0f), 0.5f, new Color(col), 20000, false);
             }
 
-            if (scrollColumn < gameWorld.X_CHUNKS - 2)
+            if (scrollPos < (gameWorld.X_CHUNKS-11) * (Chunk.X_SIZE * Voxel.SIZE))
             {
-                gameCamera.Target.X += 0.1f;
-                scrollDist += 0.1f;
-                scrollPos += 0.1f;
-                if (scrollDist >= Chunk.X_SIZE * Voxel.SIZE)
+                scrollDist += (scrollSpeed*1.5f);
+                scrollPos += scrollSpeed;
+                gameCamera.Target.X = scrollPos;
+
+                if (scrollDist >= Chunk.X_SIZE * Voxel.SIZE && scrollColumn<gameWorld.X_CHUNKS-1)
                 {
                     scrollDist = 0f;
                     for (int yy = 0; yy < 11; yy++)
@@ -142,11 +149,34 @@ namespace VoxelShooter
                     scrollColumn++;
                 }
             }
+            else scrollSpeed = 0f;
+
+            MouseState cms = Mouse.GetState();
+            KeyboardState cks = Keyboard.GetState();
+            GamePadState cgs = GamePad.GetState(PlayerIndex.One);
+
+            Vector2 virtualJoystick = Vector2.Zero;
+            if (cks.IsKeyDown(Keys.W) || cks.IsKeyDown(Keys.Up)) virtualJoystick.Y = -1;
+            if (cks.IsKeyDown(Keys.A) || cks.IsKeyDown(Keys.Left)) virtualJoystick.X = -1;
+            if (cks.IsKeyDown(Keys.S) || cks.IsKeyDown(Keys.Down)) virtualJoystick.Y = 1;
+            if (cks.IsKeyDown(Keys.D) || cks.IsKeyDown(Keys.Right)) virtualJoystick.X = 1;
+            //if (virtualJoystick.Length() > 0f) virtualJoystick.Normalize();
+            //if (cgs.ThumbSticks.Left.Length() > 0.1f)
+            //{
+            //    virtualJoystick = cgs.ThumbSticks.Left;
+            //    virtualJoystick.Y = -virtualJoystick.Y;
+            //}
+
+            gameHero.Move(virtualJoystick);
+
+            lms = cms;
+            lks = cks;
+            lgs = cgs;
 
             gameCamera.Update(gameTime, gameWorld);
             gameWorld.Update(gameTime, gameCamera);
 
-            gameHero.Update(gameTime, gameCamera, scrollPos);
+            gameHero.Update(gameTime, gameCamera, gameWorld, scrollSpeed);
 
             particleController.Update(gameTime, gameCamera, gameWorld);
             gameStarfield.Update(gameTime, gameCamera, gameWorld);

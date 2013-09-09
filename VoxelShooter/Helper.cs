@@ -199,5 +199,10 @@ namespace VoxelShooter
             return nearPoint + ray.Direction * t;
             
         }
+
+        public static float RandomFloat(float min, float max)
+        {
+            return min + ((float)Random.NextDouble() * (max-min));
+        }
     }
 }

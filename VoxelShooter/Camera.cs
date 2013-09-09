@@ -22,7 +22,7 @@ namespace VoxelShooter
         public float Roll = MathHelper.Pi;
         public float Pitch = -0.2f;
 
-        public Vector3 Offset = new Vector3(0, 0, -100f);
+        public Vector3 Offset = new Vector3(0, 0, -95f);
         //public Vector3 Offset = new Vector3(0, 0f, -30f);
 
         const float moveSpeed = 0.05f;
