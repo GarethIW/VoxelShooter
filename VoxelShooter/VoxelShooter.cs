@@ -28,6 +28,7 @@ namespace VoxelShooter
 
         BasicEffect drawEffect;
 
+        ProjectileController projectileController;
         ParticleController particleController;
         Starfield gameStarfield;
 
@@ -36,7 +37,7 @@ namespace VoxelShooter
 
         Hero gameHero;
 
-        float scrollSpeed = 0.5f;
+        float scrollSpeed = 0.2f;
         float scrollDist = 0f;
         float scrollPos = 0f;
 
@@ -96,6 +97,8 @@ namespace VoxelShooter
             gameHero = new Hero();
             gameHero.LoadContent(Content, GraphicsDevice);
 
+            projectileController = new ProjectileController(GraphicsDevice);
+            projectileController.LoadContent(Content);
             particleController = new ParticleController(GraphicsDevice);
             gameStarfield = new Starfield(GraphicsDevice);
 
@@ -169,6 +172,8 @@ namespace VoxelShooter
 
             gameHero.Move(virtualJoystick);
 
+            if (cks.IsKeyDown(Keys.Z)) gameHero.Fire();
+
             lms = cms;
             lks = cks;
             lgs = cgs;
@@ -178,6 +183,7 @@ namespace VoxelShooter
 
             gameHero.Update(gameTime, gameCamera, gameWorld, scrollSpeed);
 
+            projectileController.Update(gameTime, gameCamera, gameHero, gameWorld);
             particleController.Update(gameTime, gameCamera, gameWorld);
             gameStarfield.Update(gameTime, gameCamera, gameWorld);
 
@@ -221,6 +227,7 @@ namespace VoxelShooter
 
             gameHero.Draw(GraphicsDevice);
 
+            projectileController.Draw(gameCamera);
             particleController.Draw();
 
             base.Draw(gameTime);

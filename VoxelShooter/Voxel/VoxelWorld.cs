@@ -116,7 +116,7 @@ namespace VoxelShooter
                             if (v.Active && (v.Destructable > 0 || v.Type == VoxelType.Ground))
                             {
                                 SetVoxelActive((int)world.X, (int)world.Y, (int)world.Z, false);
-                                if (Helper.Random.Next(10) == 1) ParticleController.Instance.Spawn(screen, new Vector3(-0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -((float)Helper.Random.NextDouble() * 1f)), 0.25f, new Color(v.SR, v.SG, v.SB), 1000, true);
+                                if (Helper.Random.Next(40) == 1) ParticleController.Instance.Spawn(screen, new Vector3(-0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -0.05f + ((float)Helper.Random.NextDouble() * 0.1f),  -1f + ((float)Helper.Random.NextDouble() * 2f)), 0.25f, new Color(v.SR, v.SG, v.SB), 1000, false);
                             }
                         }
                     }
@@ -146,7 +146,7 @@ namespace VoxelShooter
                     {
                         if (c.Voxels[xx, yy, zz].Active)
                         {
-                            SetVoxel(x + xx, y + ((c.Z_SIZE - 1) - zz), z + yy, true, 0, VoxelType.Prefab, c.Voxels[xx, yy, zz].Color, new Color(c.Voxels[xx, yy, zz].Color.ToVector3() * 0.5f));
+                            SetVoxel(x + xx, y + ((c.Z_SIZE - 1) - zz), z + yy, true, 1, VoxelType.Prefab, c.Voxels[xx, yy, zz].Color, new Color(c.Voxels[xx, yy, zz].Color.ToVector3() * 0.5f));
                         }
                     }
                 }
@@ -273,6 +273,7 @@ namespace VoxelShooter
 
         void AddToUpdateQueue(Chunk c)
         {
+            if (c == null) return;
             c.Updated = true;
 
             foreach (Chunk cc in updateQueue) if (cc == c) return;

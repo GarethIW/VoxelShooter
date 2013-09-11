@@ -21,6 +21,8 @@ namespace VoxelShooter
 
         float moveSpeed = 0.5f;
 
+        double fireCooldown = 0;
+
         public Hero()
         {
             Position = new Vector3(-50f, 45f, 5f);
@@ -54,6 +56,8 @@ namespace VoxelShooter
                                               1000,
                                               false);
 
+            fireCooldown -= gameTime.ElapsedGameTime.TotalMilliseconds;
+
             drawEffect.Projection = gameCamera.projectionMatrix;
             drawEffect.View = gameCamera.viewMatrix;
             drawEffect.World = Matrix.CreateTranslation(Position);
@@ -83,10 +87,19 @@ namespace VoxelShooter
             Speed = dir * moveSpeed;
         }
 
+        public void Fire()
+        {
+            if (fireCooldown <= 0)
+            {
+                fireCooldown = 500;
+                ProjectileController.Instance.Spawn(ProjectileType.Laser, Position, Matrix.Identity, new Vector3(2f, 0f, 0f), 2000, false);
+            }
+        }
+
         void CheckCollisions(VoxelWorld world)
         {
             float checkRadius = 3.5f;
-            float radiusSweep = 0.75f;
+            float radiusSweep = 0.1f;
             Vector2 v2Pos = new Vector2(Position.X, Position.Y);
             float checkHeight = Position.Z - 1f;
             Voxel checkVoxel;
@@ -145,5 +158,7 @@ namespace VoxelShooter
                 }
             }
         }
+
+        
     }
 }

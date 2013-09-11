@@ -39,11 +39,11 @@ namespace VoxelShooter
             LoadVoxels.LoadSprite(Path.Combine(content.RootDirectory, "projectiles.vxs"), ref projectileStrip);
         }
 
-        public void Update(GameTime gameTime, Camera gameCamera, Hero gameHero)
+        public void Update(GameTime gameTime, Camera gameCamera, Hero gameHero, VoxelWorld gameWorld)
         {
             foreach (Projectile p in Projectiles.Where(proj => proj.Active))
             {
-                p.Update(gameTime, currentRoom, gameHero);
+                p.Update(gameTime, gameHero, gameWorld);
             }
 
             Projectiles.RemoveAll(proj => !proj.Active);
@@ -53,44 +53,27 @@ namespace VoxelShooter
             drawEffect.Projection = gameCamera.projectionMatrix;
         }
 
-        public void Draw(Camera gameCamera, Room currentRoom)
+        public void Draw(Camera gameCamera)
         {
-            foreach (Projectile p in Projectiles.Where(proj => proj.Type == ProjectileType.Laserbolt && proj.Room == currentRoom))
+            foreach (Projectile p in Projectiles.Where(proj => proj.Type == ProjectileType.Laser))
             {
-                drawEffect.Alpha = 0.5f;
+                //drawEffect.Alpha = 0.5f;
                 drawEffect.World = gameCamera.worldMatrix *
                                    Matrix.CreateRotationX(MathHelper.PiOver2) *
-                                   Matrix.CreateRotationZ(-MathHelper.PiOver2) *
+                                   //Matrix.CreateRotationZ(-MathHelper.PiOver2) *
                                    p.Rotation *
-                                   Matrix.CreateScale(0.5f) *
+                                   //Matrix.CreateScale(0.5f) *
                                    Matrix.CreateTranslation(p.Position);
                 foreach (EffectPass pass in drawEffect.CurrentTechnique.Passes)
                 {
                     pass.Apply();
                     
-                    graphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalColor>(PrimitiveType.TriangleList, projectileStrip.AnimChunks[1].VertexArray, 0, projectileStrip.AnimChunks[1].VertexArray.Length, projectileStrip.AnimChunks[1].IndexArray, 0, projectileStrip.AnimChunks[1].VertexArray.Length / 2);
-
-                }
-                drawEffect.Alpha = 1f;
-            }
-            foreach (Projectile p in Projectiles.Where(proj => proj.Type == ProjectileType.Rocket && proj.Room == currentRoom))
-            {
-                
-                drawEffect.World = gameCamera.worldMatrix *
-                                   Matrix.CreateRotationX(MathHelper.PiOver2) *
-                                   Matrix.CreateRotationZ(-MathHelper.PiOver2) *
-                                   p.Rotation *
-                                   Matrix.CreateScale(0.5f) *
-                                   Matrix.CreateTranslation(p.Position);
-                foreach (EffectPass pass in drawEffect.CurrentTechnique.Passes)
-                {
-                    pass.Apply();
-
                     graphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalColor>(PrimitiveType.TriangleList, projectileStrip.AnimChunks[0].VertexArray, 0, projectileStrip.AnimChunks[0].VertexArray.Length, projectileStrip.AnimChunks[0].IndexArray, 0, projectileStrip.AnimChunks[0].VertexArray.Length / 2);
 
                 }
-
+                //drawEffect.Alpha = 1f;
             }
+            
         }
 
         public void Reset()
@@ -98,16 +81,15 @@ namespace VoxelShooter
             Projectiles.Clear();
         }
 
-        public void Spawn(ProjectileType type, Room room, Vector3 pos, Matrix rot, Vector3 speed, double life, bool gravity)
+        public void Spawn(ProjectileType type, Vector3 pos, Matrix rot, Vector3 speed, double life, bool gravity)
         {
             Projectile p = null;
             switch(type)
             {
-                case ProjectileType.Laserbolt:
+                case ProjectileType.Laser:
                     p = new Projectile()
                     {
-                        Type = ProjectileType.Laserbolt,
-                        Room = room,
+                        Type = ProjectileType.Laser,
                         Active = true,
                         Position = pos,
                         Speed = speed,
@@ -117,61 +99,7 @@ namespace VoxelShooter
                         Time = 0
                     };
                     break;
-                case ProjectileType.Acid:
-                    p = new Projectile()
-                    {
-                        Type = ProjectileType.Acid,
-                        Room = room,
-                        Active = true,
-                        Position = pos,
-                        Speed = speed,
-                        Rotation = rot,
-                        affectedByGravity = gravity,
-                        Life = life,
-                        Time = 0
-                    };
-                    break;
-                case ProjectileType.Rocket:
-                    p = new Projectile()
-                    {
-                        Type = ProjectileType.Rocket,
-                        Room = room,
-                        Active = true,
-                        Position = pos,
-                        Speed = speed,
-                        Rotation = rot,
-                        affectedByGravity = gravity,
-                        Life = life,
-                        Time = 0
-                    };
-                    break;
-                case ProjectileType.Gatling:
-                    p = new Projectile()
-                    {
-                        Type = ProjectileType.Gatling,
-                        Room = room,
-                        Active = true,
-                        Position = pos,
-                        Speed = speed,
-                        Rotation = rot,
-                        affectedByGravity = gravity,
-                        Life = life,
-                        Time = 0
-                    };
-                    break;
-                //case ProjectileType.Grenade:
-                //    p = new Projectile()
-                //    {
-                //        Active = true,
-                //        Type = ProjectileType.Grenade,
-                //        Position = pos,
-                //        Speed = speed,
-                //        Rotation = rot,
-                //        affectedByGravity = gravity,
-                //        Life= life,
-                //        Time=0
-                //    };
-                //    break;
+               
             }
 
             Projectiles.Add(p);

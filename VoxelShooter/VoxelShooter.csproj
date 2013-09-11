@@ -74,6 +74,8 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="Hero.cs" />
+    <Compile Include="Projectile.cs" />
+    <Compile Include="ProjectileController.cs" />
     <Compile Include="Starfield.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Particle.cs" />
