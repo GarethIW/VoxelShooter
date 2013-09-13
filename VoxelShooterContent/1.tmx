@@ -8,4 +8,31 @@
    H4sIAAAAAAAAC+1Yyw4CIQzEJwef//+11kOjwXRpaYEiTDLhoFvozNRdNwQ+LsAr8Aa8AyPBB/DJqENd34LYQ+6sJYjhV6uSfSLzeyV75WpTn3v1TqoVdy8NtBloqXXNedBA60EvjO4d9/weoNEataNWb/OggRe/vuHVO6v7iSdItP6n3FtC6qlVBkb3Ln0WwtUjqLO+V4/aLnwg8U4zm95+2xfao0Z+ODUts7dyvECh1rPOLJmz6nMWvVpgB9wDD8Aj8AQ8dz1RHdToc+Qcpnrg2mK/Ghmj+pHuldah/lNa9SDN0Kh9jgLUxfr9FeXblv4a7bn+IqkcSeu0zs8sffZGbi6480HNQcn7bon2Wn+pHGnrWOdnpD45eeGipNbWNdx63LlAvgA5mHzMYCIAAA==
   </data>
  </layer>
+ <objectgroup name="spawns" width="200" height="11">
+  <object name="Asteroid" x="208" y="32" width="16" height="16"/>
+  <object name="Asteroid" x="224" y="128" width="16" height="16"/>
+  <object name="Asteroid" x="272" y="96" width="16" height="16"/>
+  <object name="Asteroid" x="320" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="352" y="32" width="16" height="16"/>
+  <object name="Asteroid" x="176" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="400" y="64" width="16" height="16"/>
+  <object name="Asteroid" x="416" y="16" width="16" height="16"/>
+  <object name="Asteroid" x="448" y="96" width="16" height="16"/>
+  <object name="Asteroid" x="368" y="112" width="16" height="16"/>
+  <object name="Asteroid" x="496" y="144" width="16" height="16"/>
+  <object name="Asteroid" x="464" y="64" width="16" height="16"/>
+  <object name="Asteroid" x="432" y="48" width="16" height="16"/>
+  <object name="Asteroid" x="368" y="64" width="16" height="16"/>
+  <object name="Asteroid" x="336" y="112" width="16" height="16"/>
+  <object name="Asteroid" x="304" y="48" width="16" height="16"/>
+  <object name="Asteroid" x="464" y="128" width="16" height="16"/>
+  <object name="Asteroid" x="512" y="48" width="16" height="16"/>
+  <object name="Asteroid" x="560" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="512" y="96" width="16" height="16"/>
+  <object name="Asteroid" x="560" y="128" width="16" height="16"/>
+  <object name="Asteroid" x="592" y="96" width="16" height="16"/>
+  <object name="Asteroid" x="608" y="144" width="16" height="16"/>
+  <object name="Asteroid" x="544" y="160" width="16" height="16"/>
+  <object name="Asteroid" x="624" y="112" width="16" height="16"/>
+ </objectgroup>
 </map>

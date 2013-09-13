@@ -81,7 +81,7 @@ namespace VoxelShooter
             Projectiles.Clear();
         }
 
-        public void Spawn(ProjectileType type, Vector3 pos, Matrix rot, Vector3 speed, double life, bool gravity)
+        public void Spawn(ProjectileType type, Vector3 pos, Matrix rot, Vector3 speed, float damage, double life, bool gravity)
         {
             Projectile p = null;
             switch(type)
@@ -93,6 +93,7 @@ namespace VoxelShooter
                         Active = true,
                         Position = pos,
                         Speed = speed,
+                        Damage = damage,
                         Rotation = rot,
                         affectedByGravity = gravity,
                         Life = life,

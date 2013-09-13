@@ -28,12 +28,14 @@ namespace VoxelShooter
 
         BasicEffect drawEffect;
 
+        EnemyController enemyController;
         ProjectileController projectileController;
         ParticleController particleController;
         Starfield gameStarfield;
 
         Map gameMap;
         TileLayer tileLayer;
+        
 
         Hero gameHero;
 
@@ -81,6 +83,7 @@ namespace VoxelShooter
 
             gameMap = Content.Load<Map>("1");
             tileLayer = (TileLayer)gameMap.GetLayer("tiles");
+            MapObjectLayer spawnLayer = (MapObjectLayer)gameMap.GetLayer("spawns");
 
             gameWorld = new VoxelWorld(gameMap.Width, 11, 1);
 
@@ -97,6 +100,8 @@ namespace VoxelShooter
             gameHero = new Hero();
             gameHero.LoadContent(Content, GraphicsDevice);
 
+            enemyController = new EnemyController(GraphicsDevice);
+            enemyController.LoadContent(Content, spawnLayer);
             projectileController = new ProjectileController(GraphicsDevice);
             projectileController.LoadContent(Content);
             particleController = new ParticleController(GraphicsDevice);
@@ -183,6 +188,7 @@ namespace VoxelShooter
 
             gameHero.Update(gameTime, gameCamera, gameWorld, scrollSpeed);
 
+            enemyController.Update(gameTime, gameCamera, gameHero, gameWorld, scrollPos);
             projectileController.Update(gameTime, gameCamera, gameHero, gameWorld);
             particleController.Update(gameTime, gameCamera, gameWorld);
             gameStarfield.Update(gameTime, gameCamera, gameWorld);
@@ -227,6 +233,7 @@ namespace VoxelShooter
 
             gameHero.Draw(GraphicsDevice);
 
+            enemyController.Draw(gameCamera);
             projectileController.Draw(gameCamera);
             particleController.Draw();
 

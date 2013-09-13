@@ -73,6 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Enemies\Asteroid.cs" />
+    <Compile Include="Enemies\Enemy.cs" />
+    <Compile Include="EnemyController.cs" />
     <Compile Include="Hero.cs" />
     <Compile Include="Projectile.cs" />
     <Compile Include="ProjectileController.cs" />

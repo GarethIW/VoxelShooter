@@ -14,6 +14,8 @@ namespace VoxelShooter
         public Vector3 Position;
         public Vector3 Speed;
 
+        public BoundingBox CollisionBox;
+
         Vector3 tempSpeed;
 
         BasicEffect drawEffect;
@@ -44,7 +46,7 @@ namespace VoxelShooter
             tempSpeed = Speed;
             tempSpeed.X += scrollSpeed;
 
-            CheckCollisions(gameWorld);
+            CheckCollisions(gameWorld, gameCamera);
 
             Position += tempSpeed;
 
@@ -91,12 +93,12 @@ namespace VoxelShooter
         {
             if (fireCooldown <= 0)
             {
-                fireCooldown = 500;
-                ProjectileController.Instance.Spawn(ProjectileType.Laser, Position, Matrix.Identity, new Vector3(2f, 0f, 0f), 2000, false);
+                fireCooldown = 300;
+                ProjectileController.Instance.Spawn(ProjectileType.Laser, Position, Matrix.Identity, new Vector3(2f, 0f, 0f), 1f, 2000, false);
             }
         }
 
-        void CheckCollisions(VoxelWorld world)
+        void CheckCollisions(VoxelWorld world, Camera gameCamera)
         {
             float checkRadius = 3.5f;
             float radiusSweep = 0.1f;
@@ -115,7 +117,7 @@ namespace VoxelShooter
                     {
                         tempSpeed.Y = 0f;
                     }
-                    
+                    if (gameCamera.boundingFrustum.Contains(checkPos) == ContainmentType.Disjoint) tempSpeed.Y = 0;
                 }
             }
             if (tempSpeed.Y > 0f)
@@ -128,7 +130,7 @@ namespace VoxelShooter
                     {
                         tempSpeed.Y = 0f;
                     }
-                    
+                    if (gameCamera.boundingFrustum.Contains(checkPos) == ContainmentType.Disjoint) tempSpeed.Y = 0;                    
                 }
             }
             if (tempSpeed.X < 0f)
@@ -141,6 +143,7 @@ namespace VoxelShooter
                     {
                         tempSpeed.X = 0f;
                     }
+                    if (gameCamera.boundingFrustum.Contains(checkPos) == ContainmentType.Disjoint) { tempSpeed.X -= Speed.X; break; }
                     
                 }
             }
@@ -154,6 +157,7 @@ namespace VoxelShooter
                     {
                         tempSpeed.X = 0f;
                     }
+                    if (gameCamera.boundingFrustum.Contains(checkPos) == ContainmentType.Disjoint) { tempSpeed.X -= Speed.X; break; }
                     
                 }
             }

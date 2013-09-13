@@ -21,6 +21,7 @@ namespace VoxelShooter
         public bool Active;
         public Vector3 Position;
         public Vector3 Speed;
+        public float Damage;
         public double Life;
         public double Time;
         public Matrix Rotation;
@@ -77,6 +78,8 @@ namespace VoxelShooter
                 case ProjectileType.Laser:
                     for (float d = 0f; d < 1f; d += 0.25f)
                     {
+                        if (!Active) continue;
+
                         worldSpace = gameWorld.FromScreenSpace(Position + (d * ((Position + Speed) - Position)));
                         Voxel v = gameWorld.GetVoxel(Position + (d * ((Position + Speed) - Position)));
 
@@ -108,7 +111,7 @@ namespace VoxelShooter
                         //    }
                         //    else Active = false;
                         //}
-                        //if (Deflected) foreach (Enemy e in EnemyController.Instance.Enemies.Where(en => en.Room == Room)) { if (e.boundingSphere.Contains(Position + (d * ((Position + Speed) - Position))) == ContainmentType.Contains) { e.DoHit(Position + (d * ((Position + Speed) - Position)), Speed, 5f); Active = false; } }
+                        foreach (Enemy e in EnemyController.Instance.Enemies.Where(en => en.Active)) { if (e.boundingSphere.Contains(Position + (d * ((Position + Speed) - Position))) == ContainmentType.Contains) { e.DoHit(Position + (d * ((Position + Speed) - Position)), Speed, Damage); Active = false; } }
 
                     }
                     break;
