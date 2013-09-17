@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="Enemies\Asteroid.cs" />
+    <Compile Include="Enemies\Omega.cs" />
     <Compile Include="Enemies\Enemy.cs" />
     <Compile Include="EnemyController.cs" />
     <Compile Include="Hero.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Voxel\Voxel.cs" />
     <Compile Include="Voxel\VoxelSprite.cs" />
     <Compile Include="Voxel\VoxelWorld.cs" />
+    <Compile Include="Wave.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

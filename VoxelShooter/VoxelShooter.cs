@@ -35,6 +35,7 @@ namespace VoxelShooter
 
         Map gameMap;
         TileLayer tileLayer;
+
         
 
         Hero gameHero;
@@ -188,7 +189,7 @@ namespace VoxelShooter
 
             gameHero.Update(gameTime, gameCamera, gameWorld, scrollSpeed);
 
-            enemyController.Update(gameTime, gameCamera, gameHero, gameWorld, scrollPos);
+            enemyController.Update(gameTime, gameCamera, gameHero, gameWorld, scrollPos, scrollSpeed);
             projectileController.Update(gameTime, gameCamera, gameHero, gameWorld);
             particleController.Update(gameTime, gameCamera, gameWorld);
             gameStarfield.Update(gameTime, gameCamera, gameWorld);

@@ -15,6 +15,7 @@ namespace VoxelShooter
         public Vector3 Speed;
 
         public BoundingBox CollisionBox;
+        Vector3 collisionBoxSize;
 
         Vector3 tempSpeed;
 
@@ -39,12 +40,19 @@ namespace VoxelShooter
             {
                 VertexColorEnabled = true
             };
+
+            collisionBoxSize = new Vector3(10, 4f, 2f);
+            CollisionBox = new BoundingBox();
+
         }
 
         public void Update(GameTime gameTime, Camera gameCamera, VoxelWorld gameWorld, float scrollSpeed)
         {
             tempSpeed = Speed;
             tempSpeed.X += scrollSpeed;
+
+            CollisionBox.Min = Position - (collisionBoxSize/2);
+            CollisionBox.Max = Position + (collisionBoxSize/2);
 
             CheckCollisions(gameWorld, gameCamera);
 
@@ -111,7 +119,7 @@ namespace VoxelShooter
             {
                 for (float a = -MathHelper.PiOver2 - radiusSweep; a < -MathHelper.PiOver2 + radiusSweep; a += 0.02f)
                 {
-                    checkPos = new Vector3(Helper.PointOnCircle(ref v2Pos, checkRadius, a), checkHeight);
+                    checkPos = new Vector3(Helper.PointOnCircle(ref v2Pos, collisionBoxSize.Y/2, a), checkHeight);
                     checkVoxel = world.GetVoxel(checkPos);
                     if ((checkVoxel.Active && world.CanCollideWith(checkVoxel.Type)))
                     {
@@ -124,7 +132,7 @@ namespace VoxelShooter
             {
                 for (float a = MathHelper.PiOver2 - radiusSweep; a < MathHelper.PiOver2 + radiusSweep; a += 0.02f)
                 {
-                    checkPos = new Vector3(Helper.PointOnCircle(ref v2Pos, checkRadius, a), checkHeight);
+                    checkPos = new Vector3(Helper.PointOnCircle(ref v2Pos, collisionBoxSize.Y / 2, a), checkHeight);
                     checkVoxel = world.GetVoxel(checkPos);
                     if ((checkVoxel.Active && world.CanCollideWith(checkVoxel.Type)))
                     {
@@ -137,7 +145,7 @@ namespace VoxelShooter
             {
                 for (float a = -MathHelper.Pi - radiusSweep; a < -MathHelper.Pi + radiusSweep; a += 0.02f)
                 {
-                    checkPos = new Vector3(Helper.PointOnCircle(ref v2Pos, checkRadius, a), checkHeight);
+                    checkPos = new Vector3(Helper.PointOnCircle(ref v2Pos, collisionBoxSize.X / 2, a), checkHeight);
                     checkVoxel = world.GetVoxel(checkPos);
                     if ((checkVoxel.Active && world.CanCollideWith(checkVoxel.Type)))
                     {
@@ -151,7 +159,7 @@ namespace VoxelShooter
             {
                 for (float a = -radiusSweep; a < radiusSweep; a += 0.02f)
                 {
-                    checkPos = new Vector3(Helper.PointOnCircle(ref v2Pos, checkRadius, a), checkHeight);
+                    checkPos = new Vector3(Helper.PointOnCircle(ref v2Pos, collisionBoxSize.X / 2, a), checkHeight);
                     checkVoxel = world.GetVoxel(checkPos);
                     if ((checkVoxel.Active && world.CanCollideWith(checkVoxel.Type)))
                     {

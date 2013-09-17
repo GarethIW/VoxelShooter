@@ -5,34 +5,112 @@
  </tileset>
  <layer name="tiles" width="200" height="11">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+1Yyw4CIQzEJwef//+11kOjwXRpaYEiTDLhoFvozNRdNwQ+LsAr8Aa8AyPBB/DJqENd34LYQ+6sJYjhV6uSfSLzeyV75WpTn3v1TqoVdy8NtBloqXXNedBA60EvjO4d9/weoNEataNWb/OggRe/vuHVO6v7iSdItP6n3FtC6qlVBkb3Ln0WwtUjqLO+V4/aLnwg8U4zm95+2xfao0Z+ODUts7dyvECh1rPOLJmz6nMWvVpgB9wDD8Aj8AQ8dz1RHdToc+Qcpnrg2mK/Ghmj+pHuldah/lNa9SDN0Kh9jgLUxfr9FeXblv4a7bn+IqkcSeu0zs8sffZGbi6480HNQcn7bon2Wn+pHGnrWOdnpD45eeGipNbWNdx63LlAvgA5mHzMYCIAAA==
+   H4sIAAAAAAAAC+2YSQ7DMAhF0zGLjvc/bekCVbJKDAZsrPCkLy+qYAOfJM2y8LmB7qAH6AlaCb1Ab0Yc6voewhxqZ22lrJXXPq17rY2/R+1dLZ/W82vQeqBnrXv4dE/M3jvu+SOgqTXWjlpzHnyJ2jur50kkJLVO3/9H2lMrD8zeu/JdCNeIUGf9rhFrm/yQ9E4zm9Hu7clcUP7h+MrSe+njJPHBarZyRu04gI6gE+gMuoCuQ0/kg0eeM/uwrAeuPfbz8BiVj3SvMg71n3LUnOwlz1FgXay/X1F926q/pvbc/qIoH0nj9PbPXvIcTW0uuPNBzUHL925J7bX9pXykjWPtn5ny5PiFS0usrWu48bhzgfoASBuQHmAiAAA=
   </data>
  </layer>
  <objectgroup name="spawns" width="200" height="11">
-  <object name="Asteroid" x="208" y="32" width="16" height="16"/>
+  <object name="Asteroid" x="176" y="48" width="16" height="16"/>
   <object name="Asteroid" x="224" y="128" width="16" height="16"/>
-  <object name="Asteroid" x="272" y="96" width="16" height="16"/>
   <object name="Asteroid" x="320" y="80" width="16" height="16"/>
   <object name="Asteroid" x="352" y="32" width="16" height="16"/>
-  <object name="Asteroid" x="176" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="128" y="80" width="16" height="16"/>
   <object name="Asteroid" x="400" y="64" width="16" height="16"/>
   <object name="Asteroid" x="416" y="16" width="16" height="16"/>
   <object name="Asteroid" x="448" y="96" width="16" height="16"/>
   <object name="Asteroid" x="368" y="112" width="16" height="16"/>
-  <object name="Asteroid" x="496" y="144" width="16" height="16"/>
+  <object name="Asteroid" x="496" y="96" width="16" height="16"/>
   <object name="Asteroid" x="464" y="64" width="16" height="16"/>
   <object name="Asteroid" x="432" y="48" width="16" height="16"/>
   <object name="Asteroid" x="368" y="64" width="16" height="16"/>
   <object name="Asteroid" x="336" y="112" width="16" height="16"/>
   <object name="Asteroid" x="304" y="48" width="16" height="16"/>
-  <object name="Asteroid" x="464" y="128" width="16" height="16"/>
+  <object name="Asteroid" x="544" y="112" width="16" height="16"/>
   <object name="Asteroid" x="512" y="48" width="16" height="16"/>
   <object name="Asteroid" x="560" y="80" width="16" height="16"/>
   <object name="Asteroid" x="512" y="96" width="16" height="16"/>
   <object name="Asteroid" x="560" y="128" width="16" height="16"/>
   <object name="Asteroid" x="592" y="96" width="16" height="16"/>
   <object name="Asteroid" x="608" y="144" width="16" height="16"/>
-  <object name="Asteroid" x="544" y="160" width="16" height="16"/>
+  <object name="Asteroid" x="576" y="160" width="16" height="16"/>
   <object name="Asteroid" x="624" y="112" width="16" height="16"/>
+  <object name="Asteroid" x="736" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="768" y="96" width="16" height="16"/>
+  <object name="Asteroid" x="704" y="96" width="16" height="16"/>
+  <object name="Asteroid" x="656" y="144" width="16" height="16"/>
+  <object name="Asteroid" x="736" y="112" width="16" height="16"/>
+  <object name="Asteroid" x="656" y="112" width="16" height="16"/>
+  <object name="Asteroid" x="656" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="688" y="128" width="16" height="16"/>
+  <object name="Asteroid" x="496" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="528" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="480" y="112" width="16" height="16"/>
+  <object name="Asteroid" x="416" y="96" width="16" height="16"/>
+  <object name="Asteroid" x="528" y="128" width="16" height="16"/>
+  <object name="Asteroid" x="608" y="128" width="16" height="16"/>
+  <object name="Asteroid" x="576" y="64" width="16" height="16"/>
+  <object name="Asteroid" x="544" y="48" width="16" height="16"/>
+  <object name="Asteroid" x="496" y="32" width="16" height="16"/>
+  <object name="Asteroid" x="480" y="16" width="16" height="16"/>
+  <object name="Asteroid" x="448" y="32" width="16" height="16"/>
+  <object name="Asteroid" x="816" y="64" width="16" height="16"/>
+  <object name="Asteroid" x="784" y="48" width="16" height="16"/>
+  <object name="Asteroid" x="848" y="112" width="16" height="16"/>
+  <object name="Asteroid" x="864" y="96" width="16" height="16"/>
+  <object name="Asteroid" x="848" y="64" width="16" height="16"/>
+  <object name="Asteroid" x="816" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="880" y="112" width="16" height="16"/>
+  <object name="Asteroid" x="800" y="96" width="16" height="16"/>
+  <object name="Asteroid" x="768" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="880" y="64" width="16" height="16"/>
+  <object name="Asteroid" x="832" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="960" y="64" width="16" height="16"/>
+  <object name="Asteroid" x="944" y="48" width="16" height="16"/>
+  <object name="Asteroid" x="992" y="112" width="16" height="16"/>
+  <object name="Asteroid" x="1024" y="48" width="16" height="16"/>
+  <object name="Asteroid" x="912" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="1008" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="976" y="32" width="16" height="16"/>
+  <object name="Asteroid" x="944" y="96" width="16" height="16"/>
+  <object name="Asteroid" x="1040" y="96" width="16" height="16"/>
+  <object name="Asteroid" x="928" y="128" width="16" height="16"/>
+  <object name="Asteroid" x="1056" y="32" width="16" height="16"/>
+  <object name="Asteroid" x="1088" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="1136" y="16" width="16" height="16"/>
+  <object name="Asteroid" x="1104" y="32" width="16" height="16"/>
+  <object name="Asteroid" x="1168" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="1152" y="48" width="16" height="16"/>
+  <object name="Asteroid" x="1120" y="64" width="16" height="16"/>
+  <object name="Asteroid" x="256" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="288" y="112" width="16" height="16"/>
+  <object name="Asteroid" x="192" y="96" width="16" height="16"/>
+  <object name="Asteroid" x="224" y="48" width="16" height="16"/>
+  <object name="Asteroid" x="288" y="64" width="16" height="16"/>
+  <object name="Asteroid" x="1392" y="32" width="16" height="16"/>
+  <object name="Asteroid" x="1232" y="112" width="16" height="16"/>
+  <object name="Asteroid" x="1248" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="1296" y="96" width="16" height="16"/>
+  <object name="Asteroid" x="1232" y="16" width="16" height="16"/>
+  <object name="Asteroid" x="1296" y="16" width="16" height="16"/>
+  <object name="Asteroid" x="1216" y="64" width="16" height="16"/>
+  <object name="Asteroid" x="1376" y="128" width="16" height="16"/>
+  <object name="Asteroid" x="1200" y="32" width="16" height="16"/>
+  <object name="Asteroid" x="1344" y="64" width="16" height="16"/>
+  <object name="Asteroid" x="1440" y="48" width="16" height="16"/>
+  <object name="Asteroid" x="1440" y="48" width="16" height="16"/>
+  <object name="Asteroid" x="1472" y="16" width="16" height="16"/>
+  <object name="Asteroid" x="1424" y="144" width="16" height="16"/>
+  <object name="Asteroid" x="1456" y="80" width="16" height="16"/>
+  <object name="Asteroid" x="1584" y="64" width="16" height="16">
+   <properties>
+    <property name="Count" value="5"/>
+    <property name="IsWave" value=""/>
+   </properties>
+  </object>
+  <object name="Omega" x="160" y="80" width="16" height="16">
+   <properties>
+    <property name="Count" value="5"/>
+    <property name="IsWave" value=""/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

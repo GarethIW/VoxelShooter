@@ -35,7 +35,7 @@ namespace VoxelShooter
         public Enemy(Vector3 pos, VoxelSprite sprite)
         {
             Position = pos;
-            Position.Z = 5f;
+            //Position.Z = 5f;
 
             spriteSheet = sprite;
         }
@@ -104,7 +104,7 @@ namespace VoxelShooter
                         {
                             Vector3 pos = (-new Vector3(spriteSheet.X_SIZE * Voxel.HALF_SIZE, spriteSheet.Y_SIZE * Voxel.HALF_SIZE, spriteSheet.Z_SIZE * Voxel.HALF_SIZE) * Scale) + (new Vector3(x * Voxel.SIZE, y * Voxel.SIZE, z * Voxel.SIZE) * Scale);
                             pos = Position + Vector3.Transform(pos, Matrix.CreateRotationX(Rotation.X) * Matrix.CreateRotationY(Rotation.Y) * Matrix.CreateRotationZ(Rotation.Z));
-                            ParticleController.Instance.Spawn(pos, new Vector3(-0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -1f + ((float)Helper.Random.NextDouble() * 2f)), 0.3f, v.Color, 3000, false);
+                            ParticleController.Instance.Spawn(pos, new Vector3(-0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -1f + ((float)Helper.Random.NextDouble() * 2f)), 0.5f, v.Color, 3000, false);
                         }
                         
                     }

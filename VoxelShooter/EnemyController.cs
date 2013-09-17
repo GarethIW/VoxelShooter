@@ -13,6 +13,7 @@ namespace VoxelShooter
 	public enum EnemyType
 	{
 		Asteroid,
+        Omega
 	}
 
 	public class EnemyController
@@ -22,6 +23,8 @@ namespace VoxelShooter
 		public List<Enemy> Enemies = new List<Enemy>();
 
         List<MapObject> Spawns = new List<MapObject>();
+
+        List<Wave> Waves = new List<Wave>();
 
 		Dictionary<string, VoxelSprite> spriteSheets = new Dictionary<string,VoxelSprite>();
 
@@ -42,33 +45,49 @@ namespace VoxelShooter
 
 		public void LoadContent(ContentManager content, MapObjectLayer spawnLayer)
 		{
-			VoxelSprite manhack = new VoxelSprite(16,16,16);
-			LoadVoxels.LoadSprite(Path.Combine(content.RootDirectory, "enemies", "asteroids.vxs"), ref manhack);
-			spriteSheets.Add("Asteroid", manhack);
+			VoxelSprite asteroid = new VoxelSprite(16,16,16);
+			LoadVoxels.LoadSprite(Path.Combine(content.RootDirectory, "enemies", "asteroids.vxs"), ref asteroid);
+			spriteSheets.Add("Asteroid", asteroid);
+            VoxelSprite omega = new VoxelSprite(15,15,15);
+            LoadVoxels.LoadSprite(Path.Combine(content.RootDirectory, "enemies", "omega.vxs"), ref omega);
+            spriteSheets.Add("Omega", omega);
 
             foreach (MapObject o in spawnLayer.Objects) Spawns.Add(o);
 		}
 
-		public void Spawn(EnemyType type, Vector3 pos)
+		public Enemy Spawn(EnemyType type, Vector3 pos)
 		{
-			//return;
+            Enemy e = null;
 			switch (type)
 			{
 				case EnemyType.Asteroid:
-				    Enemies.Add(new Asteroid(pos, spriteSheets["Asteroid"]));
+                    e = new Asteroid(pos, spriteSheets["Asteroid"]);
 				    break;
-				
+                case EnemyType.Omega:
+                    e = new Omega(pos, spriteSheets["Omega"]);
+                    break;
 			}
+
+            Enemies.Add(e);
+            return e;
 		}
 
 		
-		public void Update(GameTime gameTime, Camera gameCamera, Hero gameHero, VoxelWorld gameWorld, float scrollPos)
+		public void Update(GameTime gameTime, Camera gameCamera, Hero gameHero, VoxelWorld gameWorld, float scrollPos, float scrollSpeed)
 		{
             for(int i=Spawns.Count-1;i>=0;i--)
             {
-                if (gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 5).X < (int)scrollPos + 100)
+                if (gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 5).X < (int)scrollPos + 75)
                 {
-                    Spawn((EnemyType)Enum.Parse(typeof(EnemyType), Spawns[i].Name), gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 5));
+                    if (Spawns[i].Properties.Contains("IsWave"))
+                    {
+                        Wave w = new Wave(gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 5), WaveType.Circle, (EnemyType)Enum.Parse(typeof(EnemyType), Spawns[i].Name), Convert.ToInt16(Spawns[i].Properties["Count"]));
+                        Waves.Add(w);
+                    }
+                    else
+                    {
+                        Spawn((EnemyType)Enum.Parse(typeof(EnemyType), Spawns[i].Name), gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 5));
+                    }
                     Spawns.RemoveAt(i);
                 }
             }
@@ -76,6 +95,8 @@ namespace VoxelShooter
 			for(int i=Enemies.Count-1;i>=0;i--) Enemies[i].Update(gameTime, gameWorld, gameHero);
 
 			Enemies.RemoveAll(en => !en.Active || en.Position.X<scrollPos-100f);
+
+            foreach (Wave w in Waves) w.Update(gameTime, scrollSpeed);
 
 			drawEffect.World = gameCamera.worldMatrix;
 			drawEffect.View = gameCamera.viewMatrix;

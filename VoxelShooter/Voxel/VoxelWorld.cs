@@ -116,7 +116,7 @@ namespace VoxelShooter
                             if (v.Active && (v.Destructable > 0 || v.Type == VoxelType.Ground))
                             {
                                 SetVoxelActive((int)world.X, (int)world.Y, (int)world.Z, false);
-                                if (Helper.Random.Next(40) == 1) ParticleController.Instance.Spawn(screen, new Vector3(-0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -0.05f + ((float)Helper.Random.NextDouble() * 0.1f),  -1f + ((float)Helper.Random.NextDouble() * 2f)), 0.25f, new Color(v.SR, v.SG, v.SB), 1000, false);
+                                if (Helper.Random.Next(40) == 1) ParticleController.Instance.Spawn(screen, new Vector3(-0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -0.05f + ((float)Helper.Random.NextDouble() * 0.1f),  -1f + ((float)Helper.Random.NextDouble() * 2f)), 0.5f, new Color(v.SR, v.SG, v.SB), 1000, false);
                             }
                         }
                     }
