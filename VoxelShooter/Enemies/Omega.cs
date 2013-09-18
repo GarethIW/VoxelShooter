@@ -22,9 +22,9 @@ namespace VoxelShooter
 
         public override void DoCollide(bool x, bool y, bool z, Vector3 checkPosition, Hero gameHero, VoxelWorld gameWorld, bool withPlayer)
         {
-            gameWorld.Explode(checkPosition, 5f);
+            //gameWorld.Explode(checkPosition, 5f);
 
-            Die();
+            //Die();
 
             base.DoCollide(x, y, z, checkPosition, gameHero, gameWorld, withPlayer);
         }

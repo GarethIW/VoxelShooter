@@ -100,13 +100,19 @@
   <object name="Asteroid" x="1472" y="16" width="16" height="16"/>
   <object name="Asteroid" x="1424" y="144" width="16" height="16"/>
   <object name="Asteroid" x="1456" y="80" width="16" height="16"/>
-  <object name="Asteroid" x="1584" y="64" width="16" height="16">
+  <object name="Omega" x="160" y="80" width="16" height="16">
+   <properties>
+    <property name="Count" value="10"/>
+    <property name="IsWave" value=""/>
+   </properties>
+  </object>
+  <object name="Omega" x="1312" y="80" width="16" height="16">
    <properties>
     <property name="Count" value="5"/>
     <property name="IsWave" value=""/>
    </properties>
   </object>
-  <object name="Omega" x="160" y="80" width="16" height="16">
+  <object name="Omega" x="1536" y="48" width="16" height="16">
    <properties>
     <property name="Count" value="5"/>
     <property name="IsWave" value=""/>

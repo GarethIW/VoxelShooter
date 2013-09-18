@@ -81,12 +81,12 @@ namespace VoxelShooter
                 {
                     if (Spawns[i].Properties.Contains("IsWave"))
                     {
-                        Wave w = new Wave(gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 5), WaveType.Circle, (EnemyType)Enum.Parse(typeof(EnemyType), Spawns[i].Name), Convert.ToInt16(Spawns[i].Properties["Count"]));
+                        Wave w = new Wave(gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 10), WaveType.Circle, (EnemyType)Enum.Parse(typeof(EnemyType), Spawns[i].Name), Convert.ToInt16(Spawns[i].Properties["Count"]));
                         Waves.Add(w);
                     }
                     else
                     {
-                        Spawn((EnemyType)Enum.Parse(typeof(EnemyType), Spawns[i].Name), gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 5));
+                        Spawn((EnemyType)Enum.Parse(typeof(EnemyType), Spawns[i].Name), gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 10));
                     }
                     Spawns.RemoveAt(i);
                 }
@@ -94,7 +94,7 @@ namespace VoxelShooter
 
 			for(int i=Enemies.Count-1;i>=0;i--) Enemies[i].Update(gameTime, gameWorld, gameHero);
 
-			Enemies.RemoveAll(en => !en.Active || en.Position.X<scrollPos-100f);
+			Enemies.RemoveAll(en => !en.Active || en.Position.X<scrollPos-110f);
 
             foreach (Wave w in Waves) w.Update(gameTime, scrollSpeed);
 

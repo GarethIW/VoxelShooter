@@ -32,7 +32,7 @@ namespace VoxelShooter
             worldMatrix = Matrix.CreateWorld(Vector3.Zero, Vector3.Forward, Vector3.Up);
             Matrix cameraRotation = Matrix.CreateRotationZ(Roll) * Matrix.CreateRotationX(Pitch) * Matrix.CreateRotationY(Yaw);
             viewMatrix = Matrix.CreateLookAt(new Vector3(0,0,-150), new Vector3(0, 0, 100), Vector3.Down);
-            projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, vp.AspectRatio, 0.1f, 200f);
+            projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, vp.AspectRatio, 0.1f, 300f);
 
             boundingFrustum = new BoundingFrustum(viewMatrix * projectionMatrix);
 

@@ -91,8 +91,9 @@ namespace VoxelShooter
 
         public virtual void Die()
         {
-            
-           
+
+
+            int count = 0;
             for (int x = 0; x < spriteSheet.X_SIZE; x++)
                 for (int y = 0; y < spriteSheet.Y_SIZE; y++)
                     for (int z = 0; z < spriteSheet.Z_SIZE; z++)
@@ -100,11 +101,12 @@ namespace VoxelShooter
                         
                         SpriteVoxel v = spriteSheet.AnimChunks[CurrentFrame].Voxels[x, y, z];
                         if (!v.Active) continue;
-                        if (Helper.Random.Next(40) == 1)
+                        if (Helper.Random.Next(count<20?5:40) == 1)
                         {
                             Vector3 pos = (-new Vector3(spriteSheet.X_SIZE * Voxel.HALF_SIZE, spriteSheet.Y_SIZE * Voxel.HALF_SIZE, spriteSheet.Z_SIZE * Voxel.HALF_SIZE) * Scale) + (new Vector3(x * Voxel.SIZE, y * Voxel.SIZE, z * Voxel.SIZE) * Scale);
                             pos = Position + Vector3.Transform(pos, Matrix.CreateRotationX(Rotation.X) * Matrix.CreateRotationY(Rotation.Y) * Matrix.CreateRotationZ(Rotation.Z));
                             ParticleController.Instance.Spawn(pos, new Vector3(-0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -1f + ((float)Helper.Random.NextDouble() * 2f)), 0.5f, v.Color, 3000, false);
+                            count++;
                         }
                         
                     }

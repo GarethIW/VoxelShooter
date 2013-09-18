@@ -102,7 +102,7 @@ namespace VoxelShooter
             if (fireCooldown <= 0)
             {
                 fireCooldown = 300;
-                ProjectileController.Instance.Spawn(ProjectileType.Laser, Position, Matrix.Identity, new Vector3(2f, 0f, 0f), 1f, 2000, false);
+                ProjectileController.Instance.Spawn(ProjectileType.Laser, Position, Matrix.Identity, new Vector3(2f, 0f, 0f), 2f, 2000, false);
             }
         }
 

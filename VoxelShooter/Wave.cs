@@ -35,10 +35,12 @@ namespace VoxelShooter
             EnemyType = enemytype;
             EnemyCount = enemycount;
 
-            radius = 40f;
+            radius = 20f;
 
-            //Enemy e = EnemyController.Instance.Spawn(EnemyType, Position + new Vector3(0, 0, 40f));
-            //Members.Add(e);
+            Enemy e = EnemyController.Instance.Spawn(EnemyType, Position + new Vector3(0, 0, 200f));
+            e.Scale = 0f;
+            Members.Add(e);
+            EnemiesSpawned++;
         }
 
         public void Update(GameTime gameTime, float scrollSpeed)
@@ -46,11 +48,14 @@ namespace VoxelShooter
             enemyDist += 0.025f;
             spawnDist += 0.025f;
 
+            Position.X += scrollSpeed/2;
+
             if (enemyDist >= MathHelper.TwoPi) enemyDist = 0f;
 
             if (spawnDist > MathHelper.TwoPi / ((float)EnemyCount+1) && EnemiesSpawned<EnemyCount)
             {
-                Enemy e = EnemyController.Instance.Spawn(EnemyType, Position + new Vector3(0, 0, 40f));
+                Enemy e = EnemyController.Instance.Spawn(EnemyType, Position + new Vector3(0, 0, 200f));
+                e.Scale = 0f;
                 Members.Add(e);
                 spawnDist = 0f;
                 EnemiesSpawned++;
@@ -62,7 +67,8 @@ namespace VoxelShooter
                 if(e!=null)
                 {
                     e.Speed = Vector3.Zero;
-                    if (e.Position.Z > Position.Z) e.Position.Z -= 0.01f;
+                    if (e.Position.Z > Position.Z) e.Position.Z -= 1f;
+                    if (e.Scale < 1f) e.Scale += 0.01f;
                     Vector2 cp = new Vector2(Position.X,Position.Y);
                     
                     e.Position = new Vector3(Helper.PointOnCircle(ref cp, radius, enemyDist - ((float)count * ((float)MathHelper.TwoPi/(float)EnemyCount))), e.Position.Z);
