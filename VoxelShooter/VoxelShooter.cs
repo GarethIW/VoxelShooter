@@ -190,7 +190,7 @@ namespace VoxelShooter
             gameHero.Update(gameTime, gameCamera, gameWorld, scrollSpeed);
 
             enemyController.Update(gameTime, gameCamera, gameHero, gameWorld, scrollPos, scrollSpeed);
-            projectileController.Update(gameTime, gameCamera, gameHero, gameWorld);
+            projectileController.Update(gameTime, gameCamera, gameHero, gameWorld, scrollPos);
             particleController.Update(gameTime, gameCamera, gameWorld);
             gameStarfield.Update(gameTime, gameCamera, gameWorld);
 

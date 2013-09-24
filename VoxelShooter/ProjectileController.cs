@@ -39,11 +39,11 @@ namespace VoxelShooter
             LoadVoxels.LoadSprite(Path.Combine(content.RootDirectory, "projectiles.vxs"), ref projectileStrip);
         }
 
-        public void Update(GameTime gameTime, Camera gameCamera, Hero gameHero, VoxelWorld gameWorld)
+        public void Update(GameTime gameTime, Camera gameCamera, Hero gameHero, VoxelWorld gameWorld, float scrollPos)
         {
             foreach (Projectile p in Projectiles.Where(proj => proj.Active))
             {
-                p.Update(gameTime, gameHero, gameWorld);
+                p.Update(gameTime, gameHero, gameWorld, scrollPos);
             }
 
             Projectiles.RemoveAll(proj => !proj.Active);
@@ -81,7 +81,7 @@ namespace VoxelShooter
             Projectiles.Clear();
         }
 
-        public void Spawn(ProjectileType type, Vector3 pos, Matrix rot, Vector3 speed, float damage, double life, bool gravity)
+        public void Spawn(ProjectileType type, object owner, Vector3 pos, Matrix rot, Vector3 speed, float damage, double life, bool gravity)
         {
             Projectile p = null;
             switch(type)
@@ -90,6 +90,7 @@ namespace VoxelShooter
                     p = new Projectile()
                     {
                         Type = ProjectileType.Laser,
+                        Owner = owner,
                         Active = true,
                         Position = pos,
                         Speed = speed,

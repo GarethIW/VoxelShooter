@@ -14,6 +14,9 @@ namespace VoxelShooter
         public Vector3 Position;
         public Vector3 Speed;
 
+        public float Health = 100f;
+        public bool Dead = false;
+
         public BoundingBox CollisionBox;
         Vector3 collisionBoxSize;
 
@@ -25,6 +28,7 @@ namespace VoxelShooter
         float moveSpeed = 0.5f;
 
         double fireCooldown = 0;
+        public float hitAlpha = 0f;
 
         public Hero()
         {
@@ -71,10 +75,23 @@ namespace VoxelShooter
             drawEffect.Projection = gameCamera.projectionMatrix;
             drawEffect.View = gameCamera.viewMatrix;
             drawEffect.World = Matrix.CreateTranslation(Position);
+
+            if (hitAlpha > 0f) hitAlpha -= 0.1f;
+        }
+
+        public void DoHit(Vector3 pos, Projectile proj)
+        {
+            hitAlpha = 1f;
+
+            if (proj != null) // A null projectile means an enemy collided with the player
+                Health -= proj.Damage;
+            else
+                Health -= 0.1f;
         }
 
         public void Draw(GraphicsDevice gd)
         {
+            drawEffect.DiffuseColor = new Vector3(1f, 1f - hitAlpha, 1f - hitAlpha);
             foreach (EffectPass pass in drawEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
@@ -102,7 +119,7 @@ namespace VoxelShooter
             if (fireCooldown <= 0)
             {
                 fireCooldown = 300;
-                ProjectileController.Instance.Spawn(ProjectileType.Laser, Position, Matrix.Identity, new Vector3(2f, 0f, 0f), 2f, 2000, false);
+                ProjectileController.Instance.Spawn(ProjectileType.Laser, this, Position, Matrix.Identity, new Vector3(2f, 0f, 0f), 2f, 2000, false);
             }
         }
 

@@ -32,6 +32,9 @@ namespace VoxelShooter
 
         public float hitAlpha = 0f;
 
+        public double attackRate = 1000;
+        public double currentAttackTime = 0;
+
         public Enemy(Vector3 pos, VoxelSprite sprite)
         {
             Position = pos;
@@ -60,6 +63,8 @@ namespace VoxelShooter
             if (hitAlpha > 0f) hitAlpha -= 0.1f;
             if (Health <= 0f) Die();
 
+            currentAttackTime += gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (currentAttackTime >= attackRate) DoAttack();
         }
 
         internal void DoExplosionHit(Vector3 pos, float r)
@@ -78,6 +83,11 @@ namespace VoxelShooter
             hitAlpha = 1f;
 
             Health -= damage;
+        }
+
+        public virtual void DoAttack()
+        {
+            currentAttackTime = 0;
         }
 
         public virtual void DoCollide(bool x, bool y, bool z, Vector3 checkPosition, Hero gameHero, VoxelWorld gameWorld, bool withPlayer)
@@ -124,6 +134,8 @@ namespace VoxelShooter
             Voxel checkVoxel;
             Vector3 checkPos;
 
+            if (gameHero.CollisionBox.Intersects(boundingSphere)) { gameHero.DoHit(Position, null); }
+
             if (Speed.Y < 0f)
             {
                 for (float a = -MathHelper.PiOver2 - radiusSweep; a < -MathHelper.PiOver2 + radiusSweep; a += 0.02f)
@@ -135,7 +147,6 @@ namespace VoxelShooter
                         DoCollide(false, true, false, checkPos, gameHero, world, false);
                     }
                     
-                   // if (gameHero.boundingSphere.Contains(checkPos) == ContainmentType.Contains) { DoCollide(false, true, false, checkPos, gameHero, true); break; }
                 }
             }
             if (Speed.Y > 0f)

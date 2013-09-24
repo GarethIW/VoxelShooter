@@ -50,6 +50,8 @@ namespace VoxelShooter
 
             Position.X += scrollSpeed/2;
 
+            if (scrollSpeed <= 0f) Position.X -= 0.1f;
+
             if (enemyDist >= MathHelper.TwoPi) enemyDist = 0f;
 
             if (spawnDist > MathHelper.TwoPi / ((float)EnemyCount+1) && EnemiesSpawned<EnemyCount)

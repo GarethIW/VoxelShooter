@@ -15,7 +15,7 @@ namespace VoxelShooter
         {
             numFrames = 1;
             rotSpeed = new Vector3(Helper.RandomFloat(-0.1f, 0.1f), 0f, Helper.RandomFloat(-0.1f, 0.1f));//Helper.RandomFloat(-0.1f, 0.1f));
-            Speed.X = Helper.RandomFloat(-0.5f, -0.3f);
+            Speed.X = Helper.RandomFloat(-1f, -0.3f);
             Speed.Y = Helper.RandomFloat(-0.2f, 0.2f);
             Health = 3f;
         }

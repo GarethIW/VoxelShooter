@@ -18,6 +18,8 @@ namespace VoxelShooter
 
         public ProjectileType Type;
 
+        public object Owner;
+
         public bool Active;
         public Vector3 Position;
         public Vector3 Speed;
@@ -38,7 +40,7 @@ namespace VoxelShooter
 
         }
 
-        public void Update(GameTime gameTime, Hero gameHero, VoxelWorld gameWorld)
+        public void Update(GameTime gameTime, Hero gameHero, VoxelWorld gameWorld, float scrollPos)
         {
             Time += gameTime.ElapsedGameTime.TotalMilliseconds;
 
@@ -47,6 +49,8 @@ namespace VoxelShooter
             CheckCollisions(gameHero, gameWorld);
 
             Position += Speed;
+
+            if (Owner is Hero && Position.X > scrollPos + 75f) Active = false;
 
             Color c;
             switch (Type)
@@ -85,7 +89,7 @@ namespace VoxelShooter
 
                         if (v.Active && Active)
                         {
-                            if (v.Destructable >= 1)
+                            if (v.Destructable >= 1 && Owner is Hero)
                             {
                                 gameWorld.Explode(Position + (d * ((Position + Speed) - Position)), 3f);
                                 gameWorld.Explode((Position + (d * ((Position + Speed) - Position))) + new Vector3(0f,0f,-3f), 3f);
@@ -111,7 +115,15 @@ namespace VoxelShooter
                         //    }
                         //    else Active = false;
                         //}
-                        foreach (Enemy e in EnemyController.Instance.Enemies.Where(en => en.Active)) { if (e.boundingSphere.Contains(Position + (d * ((Position + Speed) - Position))) == ContainmentType.Contains) { e.DoHit(Position + (d * ((Position + Speed) - Position)), Speed, Damage); Active = false; } }
+                        if(Owner is Enemy)
+                            if (!gameHero.Dead && gameHero.CollisionBox.Contains(Position + (d * ((Position + Speed) - Position))) == ContainmentType.Contains)
+                            {
+                                gameHero.DoHit(Position + (d * ((Position + Speed) - Position)), this);
+                                Active = false;
+                            }
+
+                        if(Owner is Hero)
+                            foreach (Enemy e in EnemyController.Instance.Enemies.Where(en => en.Active)) { if (e.boundingSphere.Contains(Position + (d * ((Position + Speed) - Position))) == ContainmentType.Contains) { e.DoHit(Position + (d * ((Position + Speed) - Position)), Speed, Damage); Active = false; } }
 
                     }
                     break;

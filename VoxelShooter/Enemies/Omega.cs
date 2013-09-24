@@ -10,6 +10,8 @@ namespace VoxelShooter
     {
         Vector3 rotSpeed;
 
+
+
         public Omega(Vector3 pos, VoxelSprite sprite)
             : base(pos, sprite)
         {
@@ -18,6 +20,17 @@ namespace VoxelShooter
             //Speed.X = Helper.RandomFloat(-0.5f, -0.3f);
             //Speed.Y = Helper.RandomFloat(-0.2f, 0.2f);
             Health = 3f;
+            attackRate = 1000 + (double)Helper.Random.Next(2000);
+        }
+
+        public override void DoAttack()
+        {
+            base.DoAttack();
+
+            if (Position.Z <=5f)
+            {
+                ProjectileController.Instance.Spawn(ProjectileType.Laser, this, Position, Matrix.Identity, new Vector3(-2f, 0f, 0f), 3f, 2000, false);
+            }
         }
 
         public override void DoCollide(bool x, bool y, bool z, Vector3 checkPosition, Hero gameHero, VoxelWorld gameWorld, bool withPlayer)

@@ -5,7 +5,7 @@
  </tileset>
  <layer name="tiles" width="200" height="11">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2YSQ7DMAhF0zGLjvc/bekCVbJKDAZsrPCkLy+qYAOfJM2y8LmB7qAH6AlaCb1Ab0Yc6voewhxqZ22lrJXXPq17rY2/R+1dLZ/W82vQeqBnrXv4dE/M3jvu+SOgqTXWjlpzHnyJ2jur50kkJLVO3/9H2lMrD8zeu/JdCNeIUGf9rhFrm/yQ9E4zm9Hu7clcUP7h+MrSe+njJPHBarZyRu04gI6gE+gMuoCuQ0/kg0eeM/uwrAeuPfbz8BiVj3SvMg71n3LUnOwlz1FgXay/X1F926q/pvbc/qIoH0nj9PbPXvIcTW0uuPNBzUHL925J7bX9pXykjWPtn5ny5PiFS0usrWu48bhzgfoASBuQHmAiAAA=
+   H4sIAAAAAAAAC+2Z207DMAyGx3EwjlrXO9glcAlcMt7/uXCkWQqWndhzkobRX/qVbtPcOPa3duliodcN+BZ8B74HLwU/gB8VcaTvtzDmkJvroaJrVes8QV/gHXgg/nbGfQd/gD+j93K1u9qPAxmX5PUmEaNm7ay955G3B1py0qJPpxZyEuxlI47HxZJqt46Oh8SxhY8atdP2Xg/ycIJrJ43HzAOnsXE8WrvAB16/OC7i60cPtcv1Xk+ycPLf+l6r1nygsHaUD4mRTeF5ekXvhXDsUdJcwzhzkdZUfKBiPlLujY9Zx68X8Cv4rWDMWnyU+H80axZVigFuv8mrGnzMbPxdnYBPwWfgc/AF+HLSGf0W9h93f5Lab6LS5mnlI95D49wrG3Q9cGxxvho9JuVjPReNI+0HTMUJnV/Mh6WfrXmG5xjXka33bKMw9iZcl9L7V1J/ptbf02Pa+qIlXqxxWnOSm1/MB5fnqIyTM3efhKysFHn0zkeOCy0fEgeHPKuw9Ji3vhIv3jilObHm+QR+Bm+Zz/A3f1UgPzwP560ir1750HKB/gFuQOiOYCIAAA==
   </data>
  </layer>
  <objectgroup name="spawns" width="200" height="11">
@@ -100,12 +100,6 @@
   <object name="Asteroid" x="1472" y="16" width="16" height="16"/>
   <object name="Asteroid" x="1424" y="144" width="16" height="16"/>
   <object name="Asteroid" x="1456" y="80" width="16" height="16"/>
-  <object name="Omega" x="160" y="80" width="16" height="16">
-   <properties>
-    <property name="Count" value="10"/>
-    <property name="IsWave" value=""/>
-   </properties>
-  </object>
   <object name="Omega" x="1312" y="80" width="16" height="16">
    <properties>
     <property name="Count" value="5"/>
@@ -115,6 +109,48 @@
   <object name="Omega" x="1536" y="48" width="16" height="16">
    <properties>
     <property name="Count" value="5"/>
+    <property name="IsWave" value=""/>
+   </properties>
+  </object>
+  <object name="Omega" x="1648" y="32" width="16" height="16">
+   <properties>
+    <property name="Count" value="5"/>
+    <property name="IsWave" value=""/>
+   </properties>
+  </object>
+  <object name="Omega" x="1808" y="48" width="16" height="16">
+   <properties>
+    <property name="Count" value="7"/>
+    <property name="IsWave" value=""/>
+   </properties>
+  </object>
+  <object name="Omega" x="1984" y="16" width="16" height="16">
+   <properties>
+    <property name="Count" value="7"/>
+    <property name="IsWave" value=""/>
+   </properties>
+  </object>
+  <object name="Omega" x="2112" y="64" width="16" height="16">
+   <properties>
+    <property name="Count" value="10"/>
+    <property name="IsWave" value=""/>
+   </properties>
+  </object>
+  <object name="Omega" x="2352" y="144" width="16" height="16">
+   <properties>
+    <property name="Count" value="5"/>
+    <property name="IsWave" value=""/>
+   </properties>
+  </object>
+  <object name="Omega" x="2528" y="112" width="16" height="16">
+   <properties>
+    <property name="Count" value="10"/>
+    <property name="IsWave" value=""/>
+   </properties>
+  </object>
+  <object name="Omega" x="2640" y="80" width="16" height="16">
+   <properties>
+    <property name="Count" value="10"/>
     <property name="IsWave" value=""/>
    </properties>
   </object>
