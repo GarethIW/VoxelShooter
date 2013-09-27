@@ -154,5 +154,8 @@
     <property name="IsWave" value=""/>
    </properties>
   </object>
+  <object name="Asteroid" x="0" y="48" width="16" height="16"/>
+  <object name="Asteroid" x="48" y="112" width="16" height="16"/>
+  <object name="Asteroid" x="80" y="64" width="16" height="16"/>
  </objectgroup>
 </map>

@@ -9,7 +9,11 @@ namespace VoxelShooter
 {
     public enum ProjectileType
     {
-        Laser,
+        Laser1,
+        Laser2,
+        Laser3,
+        Laser4,
+        Rocket
     }
 
     public class Projectile
@@ -35,6 +39,8 @@ namespace VoxelShooter
         float rotX;
         float rotY;
 
+        Enemy target;
+
         public Projectile()
         {
 
@@ -55,19 +61,44 @@ namespace VoxelShooter
             Color c;
             switch (Type)
             {
-                case ProjectileType.Laser:
+                case ProjectileType.Rocket:
                     
+                    foreach(Enemy e in EnemyController.Instance.Enemies.OrderBy(en => Vector3.Distance(en.Position,Position)))
+                    {
+                        if (e.Position.X < scrollPos - 75f || !e.Active) continue;
+                        target = e;
+                        break;
+                    }
+                    
+                    if(target!=null)
+                    {
+                        if (target.Position.X > Position.X) Speed.X += 0.03f;
+                        if (target.Position.X < Position.X) Speed.X -= 0.03f;
+                        if (target.Position.Y > Position.Y) Speed.Y += 0.03f;
+                        if (target.Position.Y < Position.Y) Speed.Y -= 0.03f;
+                        Rotation = Matrix.CreateRotationZ(Helper.V2ToAngle(new Vector2(Speed.X, Speed.Y)));
+                        Speed = Vector3.Clamp(Speed, new Vector3(-1f, -1f, 0f), new Vector3(1f, 1f, 0f));
+
+                    }
+
+                    if (Helper.Random.Next(5) == 1)
+                        ParticleController.Instance.Spawn(Position + new Vector3(Helper.RandomFloat(-0.1f,1f),Helper.RandomFloat(-0.1f,1f),0f) ,
+                                                      Vector3.Zero,
+                                                      0.3f,
+                                                      new Color(new Vector3(1f, Helper.RandomFloat(0f, 1.0f), 0f) * Helper.RandomFloat(0.5f, 1.0f)),
+                                                      1000,
+                                                      false);
+
                     break;
                
             }
 
             if (Time >= Life)
             {
-                //if (Type == ProjectileType.Grenade || Type == ProjectileType.Rocket)
-                //{
-                //    ParticleController.Instance.SpawnExplosion(Position);
-                //    gameWorld.Explode(Position + new Vector3(0,0,-2f), 5f);
-                //}
+                if (Type == ProjectileType.Rocket)
+                {
+                    ParticleController.Instance.SpawnExplosion(Position);
+                }
                 Active = false;
             }
 
@@ -79,7 +110,11 @@ namespace VoxelShooter
             Vector3 worldSpace; 
             switch (Type)
             {
-                case ProjectileType.Laser:
+                case ProjectileType.Laser1:
+                case ProjectileType.Laser2:
+                case ProjectileType.Laser3:
+                case ProjectileType.Laser4:
+                case ProjectileType.Rocket:
                     for (float d = 0f; d < 1f; d += 0.25f)
                     {
                         if (!Active) continue;
@@ -91,9 +126,9 @@ namespace VoxelShooter
                         {
                             if (v.Destructable >= 1 && Owner is Hero)
                             {
-                                gameWorld.Explode(Position + (d * ((Position + Speed) - Position)), 3f);
-                                gameWorld.Explode((Position + (d * ((Position + Speed) - Position))) + new Vector3(0f,0f,-3f), 3f);
-                                gameWorld.Explode((Position + (d * ((Position + Speed) - Position))) + new Vector3(0f, 0f, 3f), 3f);
+                                gameWorld.Explode(Position + (d * ((Position + Speed) - Position)), Type!= ProjectileType.Rocket?3f:5f);
+                                gameWorld.Explode((Position + (d * ((Position + Speed) - Position))) + new Vector3(0f, 0f, -3f), Type != ProjectileType.Rocket ? 3f : 5f);
+                                gameWorld.Explode((Position + (d * ((Position + Speed) - Position))) + new Vector3(0f, 0f, 3f), Type != ProjectileType.Rocket ? 3f : 5f);
 
                                 //gameWorld.SetVoxelActive((int)worldSpace.X, (int)worldSpace.Y, (int)worldSpace.Z, false);
                                 //for (int i = 0; i < 4; i++) ParticleController.Instance.Spawn(Position, new Vector3(-0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -((float)Helper.Random.NextDouble() * 0.5f)), 0.25f, new Color(v.SR, v.SG, v.SB), 1000, true);
@@ -101,30 +136,19 @@ namespace VoxelShooter
                             }
                             Active = false;
                         }
-                        //if (!gameHero.Dead && gameHero.boundingSphere.Contains(Position + (d * ((Position + Speed) - Position))) == ContainmentType.Contains)
-                        //{
-                        //    if (!gameHero.DoHit(Position + (d * ((Position + Speed) - Position)), Speed, 2f))
-                        //    {
-                        //        Speed = -Speed;
-                        //        float rot = Helper.V2ToAngle(new Vector2(Speed.X,Speed.Y));
-                        //        if(Type== ProjectileType.Gatling) rot = (rot-0.2f) + ((float)Helper.Random.NextDouble() * 0.4f);
-                        //        Speed = new Vector3(Helper.AngleToVector(rot, 1f),0f);
-                        //        Deflected = true;
-                        //        Rotation = Matrix.CreateRotationZ(rot);
-                        //        AudioController.PlaySFX(Type== ProjectileType.Laserbolt?"deflect":"gatling_deflect", Type== ProjectileType.Laserbolt?0.5f:1f, -0.1f, 0.1f);
-                        //    }
-                        //    else Active = false;
-                        //}
+                       
                         if(Owner is Enemy)
                             if (!gameHero.Dead && gameHero.CollisionBox.Contains(Position + (d * ((Position + Speed) - Position))) == ContainmentType.Contains)
                             {
                                 gameHero.DoHit(Position + (d * ((Position + Speed) - Position)), this);
                                 Active = false;
+                                if(Type== ProjectileType.Rocket) ParticleController.Instance.SpawnExplosion(Position);
                             }
 
                         if(Owner is Hero)
-                            foreach (Enemy e in EnemyController.Instance.Enemies.Where(en => en.Active)) { if (e.boundingSphere.Contains(Position + (d * ((Position + Speed) - Position))) == ContainmentType.Contains) { e.DoHit(Position + (d * ((Position + Speed) - Position)), Speed, Damage); Active = false; } }
+                            foreach (Enemy e in EnemyController.Instance.Enemies.Where(en => en.Active)) { if (e.boundingSphere.Contains(Position + (d * ((Position + Speed) - Position))) == ContainmentType.Contains) { e.DoHit(Position + (d * ((Position + Speed) - Position)), Speed, Damage); Active = false; if (Type == ProjectileType.Rocket) ParticleController.Instance.SpawnExplosion(Position); } }
 
+                        
                     }
                     break;
             }

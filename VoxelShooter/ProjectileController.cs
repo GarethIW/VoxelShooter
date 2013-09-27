@@ -55,7 +55,7 @@ namespace VoxelShooter
 
         public void Draw(Camera gameCamera)
         {
-            foreach (Projectile p in Projectiles.Where(proj => proj.Type == ProjectileType.Laser))
+            foreach (Projectile p in Projectiles.Where(proj => proj.Type == ProjectileType.Laser1 || proj.Type == ProjectileType.Laser2 || proj.Type == ProjectileType.Laser3 || proj.Type == ProjectileType.Laser4))
             {
                 //drawEffect.Alpha = 0.5f;
                 drawEffect.World = gameCamera.worldMatrix *
@@ -67,11 +67,27 @@ namespace VoxelShooter
                 foreach (EffectPass pass in drawEffect.CurrentTechnique.Passes)
                 {
                     pass.Apply();
-                    
-                    graphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalColor>(PrimitiveType.TriangleList, projectileStrip.AnimChunks[0].VertexArray, 0, projectileStrip.AnimChunks[0].VertexArray.Length, projectileStrip.AnimChunks[0].IndexArray, 0, projectileStrip.AnimChunks[0].VertexArray.Length / 2);
+
+                    graphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalColor>(PrimitiveType.TriangleList, projectileStrip.AnimChunks[(int)p.Type].VertexArray, 0, projectileStrip.AnimChunks[(int)p.Type].VertexArray.Length, projectileStrip.AnimChunks[(int)p.Type].IndexArray, 0, projectileStrip.AnimChunks[(int)p.Type].VertexArray.Length / 2);
 
                 }
                 //drawEffect.Alpha = 1f;
+            }
+
+            foreach (Projectile p in Projectiles.Where(proj => proj.Type == ProjectileType.Rocket))
+            {
+                drawEffect.World = gameCamera.worldMatrix *
+                                   Matrix.CreateRotationX(MathHelper.PiOver2) *
+                                   p.Rotation *
+                                   Matrix.CreateScale(0.5f) * 
+                                   Matrix.CreateTranslation(p.Position);
+                foreach (EffectPass pass in drawEffect.CurrentTechnique.Passes)
+                {
+                    pass.Apply();
+
+                    graphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalColor>(PrimitiveType.TriangleList, projectileStrip.AnimChunks[4].VertexArray, 0, projectileStrip.AnimChunks[4].VertexArray.Length, projectileStrip.AnimChunks[4].IndexArray, 0, projectileStrip.AnimChunks[4].VertexArray.Length / 2);
+
+                }
             }
             
         }
@@ -86,10 +102,14 @@ namespace VoxelShooter
             Projectile p = null;
             switch(type)
             {
-                case ProjectileType.Laser:
+                case ProjectileType.Laser1:
+                case ProjectileType.Laser2:
+                case ProjectileType.Laser3:
+                case ProjectileType.Laser4:
+                case ProjectileType.Rocket:
                     p = new Projectile()
                     {
-                        Type = ProjectileType.Laser,
+                        Type = type,
                         Owner = owner,
                         Active = true,
                         Position = pos,
@@ -101,7 +121,6 @@ namespace VoxelShooter
                         Time = 0
                     };
                     break;
-               
             }
 
             Projectiles.Add(p);

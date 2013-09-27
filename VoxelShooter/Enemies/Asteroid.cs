@@ -20,6 +20,17 @@ namespace VoxelShooter
             Health = 3f;
         }
 
+        public override void Die()
+        {
+            base.Die();
+
+            if(Health<=0f)
+                for (int i = 0; i < 3; i++)
+                    PowerupController.Instance.Spawn(Position + new Vector3(Helper.RandomFloat(-3f, 3f), Helper.RandomFloat(-3f, 3f), 0f));
+        }
+
+        
+
         public override void DoCollide(bool x, bool y, bool z, Vector3 checkPosition, Hero gameHero, VoxelWorld gameWorld, bool withPlayer)
         {
             gameWorld.Explode(checkPosition, 5f);

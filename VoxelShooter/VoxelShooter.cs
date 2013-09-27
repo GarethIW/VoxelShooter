@@ -31,24 +31,25 @@ namespace VoxelShooter
         EnemyController enemyController;
         ProjectileController projectileController;
         ParticleController particleController;
+        PowerupController powerupController;
         Starfield gameStarfield;
 
         Map gameMap;
         TileLayer tileLayer;
 
-        
-
         Hero gameHero;
 
         float scrollSpeed = 0.2f;
         float scrollDist = 0f;
-        float scrollPos = 0f;
+        float scrollPos = -100f;
 
         int scrollColumn;
 
         MouseState lms;
         KeyboardState lks;
         GamePadState lgs;
+
+        SpriteFont font;
 
         public VoxelShooter()
         {
@@ -79,6 +80,8 @@ namespace VoxelShooter
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            font = Content.Load<SpriteFont>("font");
+
             tilesSprite = new VoxelSprite(16, 16, 16);
             LoadVoxels.LoadSprite(Path.Combine(Content.RootDirectory, "tiles.vxs"), ref tilesSprite);
 
@@ -106,6 +109,8 @@ namespace VoxelShooter
             projectileController = new ProjectileController(GraphicsDevice);
             projectileController.LoadContent(Content);
             particleController = new ParticleController(GraphicsDevice);
+            powerupController = new PowerupController(GraphicsDevice);
+            powerupController.LoadContent(Content);
             gameStarfield = new Starfield(GraphicsDevice);
 
             drawEffect = new BasicEffect(GraphicsDevice)
@@ -137,11 +142,13 @@ namespace VoxelShooter
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            if (!IsActive) return;
+
             if (Helper.Random.Next(10) == 1)
             {
                 Vector3 pos = new Vector3(100f, -50f+((float)Helper.Random.NextDouble()*100f), 5f + ((float)Helper.Random.NextDouble()*10f));
                 Vector3 col = (Vector3.One * 0.5f) + (Vector3.One*((float)Helper.Random.NextDouble()*0.5f));
-                gameStarfield.Spawn(pos, new Vector3(-0.1f-((float)Helper.Random.NextDouble()*1f), 0f, 0f), 0.5f, new Color(col), 20000, false);
+                if(scrollSpeed>0f) gameStarfield.Spawn(pos, new Vector3((-0.1f-((float)Helper.Random.NextDouble()*1f)) * 5f, 0f, 0f), 0.5f, new Color(col), 20000, false);
             }
 
             if (scrollPos < (gameWorld.X_CHUNKS-11) * (Chunk.X_SIZE * Voxel.SIZE))
@@ -158,7 +165,7 @@ namespace VoxelShooter
                     scrollColumn++;
                 }
             }
-            else scrollSpeed = 0f;
+            else if(scrollSpeed>0f) scrollSpeed -= 0.01f;
 
             MouseState cms = Mouse.GetState();
             KeyboardState cks = Keyboard.GetState();
@@ -192,7 +199,8 @@ namespace VoxelShooter
             enemyController.Update(gameTime, gameCamera, gameHero, gameWorld, scrollPos, scrollSpeed);
             projectileController.Update(gameTime, gameCamera, gameHero, gameWorld, scrollPos);
             particleController.Update(gameTime, gameCamera, gameWorld);
-            gameStarfield.Update(gameTime, gameCamera, gameWorld);
+            powerupController.Update(gameTime, gameCamera, gameWorld, gameHero, scrollPos);
+            gameStarfield.Update(gameTime, gameCamera, gameWorld, scrollSpeed);
 
             drawEffect.View = gameCamera.viewMatrix;
             drawEffect.World = gameCamera.worldMatrix;
@@ -237,6 +245,11 @@ namespace VoxelShooter
             enemyController.Draw(gameCamera);
             projectileController.Draw(gameCamera);
             particleController.Draw();
+            powerupController.Draw();
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, gameHero.XP.ToString("0.00"), Vector2.One * 5, Color.White);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

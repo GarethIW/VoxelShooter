@@ -103,6 +103,7 @@ namespace VoxelShooter
         {
 
 
+
             int count = 0;
             for (int x = 0; x < spriteSheet.X_SIZE; x++)
                 for (int y = 0; y < spriteSheet.Y_SIZE; y++)

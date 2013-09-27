@@ -50,12 +50,12 @@ namespace VoxelShooter
 
         }
 
-        public void Update(GameTime gameTime, Camera gameCamera, VoxelWorld gameWorld)
+        public void Update(GameTime gameTime, Camera gameCamera, VoxelWorld gameWorld, float scrollSpeed)
         {
             
             foreach (Particle p in Particles.Where(part => part.Active))
             {
-                p.Update(gameTime, gameWorld);
+                p.UpdateStarField(gameTime, gameWorld, scrollSpeed);
             }
 
             updateTime += gameTime.ElapsedGameTime.TotalMilliseconds;
