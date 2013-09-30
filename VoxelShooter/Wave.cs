@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TiledLib;
 
 namespace VoxelShooter
 {
@@ -28,16 +29,19 @@ namespace VoxelShooter
         float spawnDist = 0f;
         float enemyDist = 0f;
 
-        public Wave(Vector3 pos, WaveType type, EnemyType enemytype, int enemycount)
+        PropertyCollection Props;
+
+        public Wave(Vector3 pos, WaveType type, EnemyType enemytype, int enemycount, PropertyCollection props)
         {
             Position = pos;
             Type = type;
             EnemyType = enemytype;
             EnemyCount = enemycount;
+            Props = props;
 
             radius = 20f;
 
-            Enemy e = EnemyController.Instance.Spawn(EnemyType, Position + new Vector3(0, 0, 200f));
+            Enemy e = EnemyController.Instance.Spawn(EnemyType, Position + new Vector3(0, 0, 200f), props);
             e.Scale = 0f;
             Members.Add(e);
             EnemiesSpawned++;
@@ -56,7 +60,7 @@ namespace VoxelShooter
 
             if (spawnDist > MathHelper.TwoPi / ((float)EnemyCount+1) && EnemiesSpawned<EnemyCount)
             {
-                Enemy e = EnemyController.Instance.Spawn(EnemyType, Position + new Vector3(0, 0, 200f));
+                Enemy e = EnemyController.Instance.Spawn(EnemyType, Position + new Vector3(0, 0, 200f), Props);
                 e.Scale = 0f;
                 Members.Add(e);
                 spawnDist = 0f;

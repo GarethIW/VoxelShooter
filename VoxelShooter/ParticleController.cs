@@ -9,7 +9,7 @@ namespace VoxelShooter
 {
     public class ParticleController
     {
-        const int MAX_PARTICLES = 500;
+        const int MAX_PARTICLES = 300;
 
         public static ParticleController Instance;
 
@@ -25,7 +25,7 @@ namespace VoxelShooter
         BasicEffect drawEffect;
 
         double updateTime = 0;
-        double updateTargetTime = 0;
+        double updateTargetTime = 10;
 
         int parts = 0;
 

@@ -51,6 +51,8 @@ namespace VoxelShooter
 
         SpriteFont font;
 
+        Texture2D hudTex;
+
         public VoxelShooter()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -81,6 +83,7 @@ namespace VoxelShooter
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             font = Content.Load<SpriteFont>("font");
+            hudTex = Content.Load<Texture2D>("hud");
 
             tilesSprite = new VoxelSprite(16, 16, 16);
             LoadVoxels.LoadSprite(Path.Combine(Content.RootDirectory, "tiles.vxs"), ref tilesSprite);
@@ -248,7 +251,16 @@ namespace VoxelShooter
             powerupController.Draw();
 
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, gameHero.XP.ToString("0.00"), Vector2.One * 5, Color.White);
+            spriteBatch.Draw(hudTex, new Vector2(16, 16), new Rectangle(0, 0, 16, 688), Color.White * 0.2f);
+            spriteBatch.Draw(hudTex, new Vector2(40, 16), new Rectangle(32, 0, 16, 688), Color.White * 0.2f);
+            spriteBatch.Draw(hudTex, new Vector2(16, 16 + (int)((688f / 100f) * (100f - gameHero.Health))), new Rectangle(0, 0, 16, (int)((688f / 100f) * (gameHero.Health))), Color.White);
+            spriteBatch.Draw(hudTex, new Vector2(40, 16 + (int)((688f / 100f) * (100f - gameHero.XP))), new Rectangle(32, 0, 16, (int)((688f / 100f) * (gameHero.XP))), Color.White);
+            for (int i = 0; i < 5; i++)
+            {
+                spriteBatch.Draw(hudTex, new Vector2(40, 16 + (int)((688f / 100f) * (100f - gameHero.xpLevels[i]))), new Rectangle(64, 0, 16, 1), Color.White);
+
+            }
+            //spriteBatch.DrawString(font, gameHero.XP.ToString("0.00"), Vector2.One * 5, Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);

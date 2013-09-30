@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="200" height="11" tilewidth="16" tileheight="16">
+<map version="1.0" orientation="orthogonal" width="500" height="11" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16">
   <image source="tiles.png" width="160" height="160"/>
  </tileset>
- <layer name="tiles" width="200" height="11">
+ <layer name="tiles" width="500" height="11">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2Z207DMAyGx3EwjlrXO9glcAlcMt7/uXCkWQqWndhzkobRX/qVbtPcOPa3duliodcN+BZ8B74HLwU/gB8VcaTvtzDmkJvroaJrVes8QV/gHXgg/nbGfQd/gD+j93K1u9qPAxmX5PUmEaNm7ay955G3B1py0qJPpxZyEuxlI47HxZJqt46Oh8SxhY8atdP2Xg/ycIJrJ43HzAOnsXE8WrvAB16/OC7i60cPtcv1Xk+ycPLf+l6r1nygsHaUD4mRTeF5ekXvhXDsUdJcwzhzkdZUfKBiPlLujY9Zx68X8Cv4rWDMWnyU+H80axZVigFuv8mrGnzMbPxdnYBPwWfgc/AF+HLSGf0W9h93f5Lab6LS5mnlI95D49wrG3Q9cGxxvho9JuVjPReNI+0HTMUJnV/Mh6WfrXmG5xjXka33bKMw9iZcl9L7V1J/ptbf02Pa+qIlXqxxWnOSm1/MB5fnqIyTM3efhKysFHn0zkeOCy0fEgeHPKuw9Ji3vhIv3jilObHm+QR+Bm+Zz/A3f1UgPzwP560ir1750HKB/gFuQOiOYCIAAA==
+   H4sIAAAAAAAAC+1byW4cIRDtrE6cVR6PlNWnbEpkZ1FWZ/Exueac//+PFMqURMpUUTQU0DM86Yn2eIYuGqjHY5hp0uMG8CbwFvA2cI/hHeBdRT3c52sQ2xCLdS7os7K6j8Mp8CtwRfgts943wLfAd95rsb67tilXpNwjfx8KdVj23emmTbVI+6QFc8eBFgeb+x1G3rdWXFPUzhlzxpa2/duEn8AHwIfAswh/F7rfPeD9QKmNo2Q81kh5vmeZ98rVrJpztIautgbqumOJHI71heri+u7Au14J1yl6Xrrvamp6jg4/LsBaWu5gqecImnNo2ULHEbuo5w5PgE+nuNb86SSOWvGUQkq7ekCOrnPzehf0OwRNTixZH+07zGkhf+6/7nJey76rpekldLh0n1qhhp7HMDeXlBhr0vp32yH5Zix/dRJHzXhKwW+X5Nd7Qspc3DWd1qK2niOw76iec5reg4fx9zMsiHk9t0+2Sc+fAZ8DXwjXJRDz8VZrxqX01cByIfn1HiHNxaHjMlrpOcLXc4k96LmPWDtznuvQ8/PvWcq4SMVS+qonfAd+BH4KlD8axtUzuH2Ige1BaY/jYKXnve1JDj3noR1Xmv1mPF9Bv5MZer6bOAG+nvjvg18CXzWLbmDAFlJuDZ1Hz4WFnvem5Q5Dz3mUPOfFjQ//nOSSwfXVBeBF4BXg1XrhdA3nyz8Dv0y8nr8Hfpja+HZp36D1/gEX28D/wHl3CXh56m/+SblVex7HXxPE8kyqlsS+k+5Jy/E5WNCtq3DNNfT8fF3Ul2+DPw+ttXF+0fM/ON92VedjvjxGa9+uja/F/oEUmxV8XbQYq1R35+ovrYc7f9dqvtH4/Nyaor9+PX4dXDvd78ive0zdw18zZS9wubfG+faQ1s99lq1g6c+prrecaykIrfv958TpeIxLaDtFyCtKvlXjy2Ms4dsl/62ND+Ow9ul+rFJsc8HpqaSLOWNVq7tITt9T66k932LxUS2m7Vwr6pH0nL7HJ2r7vqIdPet5LS2Xfn+e4/1Lno/QoJY/b6lt2n05Sac186qXPFMCxxPvFTnfmuvLS/nl0nFY+vSUWGPgdNt6rObqLqfvufWUnm+p7Xw0/ft98lHgf+ip9yN1aPIO3ifEI0W7etXzmlou6bmF788lt06o4c9baVvMR6fkvZJ6XqPtuZB8Nuefc335XN9uHYeVT0/dy/gLsTyXUPBVAAA=
   </data>
  </layer>
- <objectgroup name="spawns" width="200" height="11">
+ <objectgroup name="spawns" width="500" height="11">
   <object name="Asteroid" x="176" y="48" width="16" height="16"/>
   <object name="Asteroid" x="224" y="128" width="16" height="16"/>
   <object name="Asteroid" x="320" y="80" width="16" height="16"/>
@@ -157,5 +157,86 @@
   <object name="Asteroid" x="0" y="48" width="16" height="16"/>
   <object name="Asteroid" x="48" y="112" width="16" height="16"/>
   <object name="Asteroid" x="80" y="64" width="16" height="16"/>
+  <object name="Asteroid" x="4741" y="67" width="16" height="16"/>
+  <object name="Asteroid" x="4757" y="115" width="16" height="16"/>
+  <object name="Asteroid" x="4821" y="115" width="16" height="16"/>
+  <object name="Asteroid" x="4725" y="35" width="16" height="16"/>
+  <object name="Asteroid" x="4789" y="35" width="16" height="16"/>
+  <object name="Asteroid" x="4757" y="51" width="16" height="16"/>
+  <object name="Asteroid" x="4805" y="99" width="16" height="16"/>
+  <object name="Asteroid" x="4821" y="67" width="16" height="16"/>
+  <object name="Asteroid" x="4837" y="147" width="16" height="16"/>
+  <object name="Asteroid" x="4773" y="83" width="16" height="16"/>
+  <object name="Asteroid" x="4725" y="115" width="16" height="16"/>
+  <object name="Asteroid" x="4709" y="83" width="16" height="16"/>
+  <object name="Asteroid" x="4837" y="99" width="16" height="16"/>
+  <object name="Asteroid" x="4789" y="131" width="16" height="16"/>
+  <object name="Asteroid" x="4805" y="115" width="16" height="16"/>
+  <object name="Asteroid" x="4805" y="51" width="16" height="16"/>
+  <object name="Asteroid" x="4975" y="110" width="16" height="16"/>
+  <object name="Asteroid" x="4927" y="46" width="16" height="16"/>
+  <object name="Asteroid" x="4863" y="46" width="16" height="16"/>
+  <object name="Asteroid" x="4975" y="158" width="16" height="16"/>
+  <object name="Asteroid" x="4943" y="110" width="16" height="16"/>
+  <object name="Asteroid" x="4879" y="78" width="16" height="16"/>
+  <object name="Asteroid" x="4895" y="62" width="16" height="16"/>
+  <object name="Asteroid" x="4943" y="62" width="16" height="16"/>
+  <object name="Asteroid" x="4863" y="126" width="16" height="16"/>
+  <object name="Asteroid" x="4895" y="126" width="16" height="16"/>
+  <object name="Asteroid" x="4847" y="94" width="16" height="16"/>
+  <object name="Asteroid" x="4943" y="126" width="16" height="16"/>
+  <object name="Asteroid" x="4959" y="78" width="16" height="16"/>
+  <object name="Asteroid" x="4927" y="142" width="16" height="16"/>
+  <object name="Asteroid" x="4911" y="94" width="16" height="16"/>
+  <object name="Asteroid" x="4959" y="126" width="16" height="16"/>
+  <object name="Asteroid" x="5120" y="109" width="16" height="16"/>
+  <object name="Asteroid" x="5072" y="85" width="16" height="16"/>
+  <object name="Asteroid" x="5006" y="81" width="16" height="16"/>
+  <object name="Asteroid" x="5130" y="135" width="16" height="16"/>
+  <object name="Asteroid" x="5088" y="109" width="16" height="16"/>
+  <object name="Asteroid" x="5024" y="77" width="16" height="16"/>
+  <object name="Asteroid" x="5035" y="96" width="16" height="16"/>
+  <object name="Asteroid" x="5021" y="146" width="16" height="16"/>
+  <object name="Asteroid" x="5008" y="125" width="16" height="16"/>
+  <object name="Asteroid" x="5040" y="125" width="16" height="16"/>
+  <object name="Asteroid" x="4992" y="93" width="16" height="16"/>
+  <object name="Asteroid" x="5088" y="125" width="16" height="16"/>
+  <object name="Asteroid" x="5104" y="77" width="16" height="16"/>
+  <object name="Asteroid" x="5072" y="141" width="16" height="16"/>
+  <object name="Asteroid" x="5056" y="93" width="16" height="16"/>
+  <object name="Asteroid" x="5104" y="125" width="16" height="16"/>
+  <object name="Turret" x="2016" y="95" width="16" height="16"/>
+  <object name="Turret" x="2239" y="127" width="16" height="16"/>
+  <object name="Turret" x="3073" y="95" width="16" height="16"/>
+  <object name="Turret" x="3169" y="63" width="16" height="16">
+   <properties>
+    <property name="Inverted" value=""/>
+   </properties>
+  </object>
+  <object name="Turret" x="3313" y="95" width="16" height="16"/>
+  <object name="Turret" x="3616" y="126" width="16" height="16"/>
+  <object name="Turret" x="3423" y="63" width="16" height="16">
+   <properties>
+    <property name="Inverted" value=""/>
+   </properties>
+  </object>
+  <object name="Turret" x="3519" y="48" width="16" height="16">
+   <properties>
+    <property name="Inverted" value=""/>
+   </properties>
+  </object>
+  <object name="Turret" x="3840" y="32" width="16" height="16">
+   <properties>
+    <property name="Inverted" value=""/>
+   </properties>
+  </object>
+  <object name="Turret" x="3857" y="143" width="16" height="16"/>
+  <object name="Turret" x="4014" y="142" width="16" height="16"/>
+  <object name="Turret" x="4256" y="63" width="16" height="16"/>
+  <object name="Turret" x="4417" y="95" width="16" height="16">
+   <properties>
+    <property name="Inverted" value=""/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

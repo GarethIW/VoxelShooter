@@ -13,7 +13,8 @@ namespace VoxelShooter
 	public enum EnemyType
 	{
 		Asteroid,
-        Omega
+        Omega,
+        Turret
 	}
 
 	public class EnemyController
@@ -51,11 +52,14 @@ namespace VoxelShooter
             VoxelSprite omega = new VoxelSprite(15,15,15);
             LoadVoxels.LoadSprite(Path.Combine(content.RootDirectory, "enemies", "omega.vxs"), ref omega);
             spriteSheets.Add("Omega", omega);
+            VoxelSprite turret = new VoxelSprite(15, 15, 15);
+            LoadVoxels.LoadSprite(Path.Combine(content.RootDirectory, "enemies", "turret.vxs"), ref turret);
+            spriteSheets.Add("Turret", turret);
 
             foreach (MapObject o in spawnLayer.Objects) Spawns.Add(o);
 		}
 
-		public Enemy Spawn(EnemyType type, Vector3 pos)
+		public Enemy Spawn(EnemyType type, Vector3 pos, PropertyCollection props)
 		{
             Enemy e = null;
 			switch (type)
@@ -65,6 +69,9 @@ namespace VoxelShooter
 				    break;
                 case EnemyType.Omega:
                     e = new Omega(pos, spriteSheets["Omega"]);
+                    break;
+                case EnemyType.Turret:
+                    e = new Turret(pos, spriteSheets["Turret"], props.Contains("Inverted"));
                     break;
 			}
 
@@ -81,12 +88,12 @@ namespace VoxelShooter
                 {
                     if (Spawns[i].Properties.Contains("IsWave"))
                     {
-                        Wave w = new Wave(gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 10), WaveType.Circle, (EnemyType)Enum.Parse(typeof(EnemyType), Spawns[i].Name), Convert.ToInt16(Spawns[i].Properties["Count"]));
+                        Wave w = new Wave(gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 10), WaveType.Circle, (EnemyType)Enum.Parse(typeof(EnemyType), Spawns[i].Name), Convert.ToInt16(Spawns[i].Properties["Count"]), Spawns[i].Properties);
                         Waves.Add(w);
                     }
                     else
                     {
-                        Spawn((EnemyType)Enum.Parse(typeof(EnemyType), Spawns[i].Name), gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 10));
+                        Spawn((EnemyType)Enum.Parse(typeof(EnemyType), Spawns[i].Name), gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 10), Spawns[i].Properties);
                     }
                     Spawns.RemoveAt(i);
                 }
@@ -127,6 +134,31 @@ namespace VoxelShooter
                 }
 
 			}
+
+            foreach (Enemy e in Enemies.Where(en => en is Turret))
+            {
+                drawEffect.DiffuseColor = new Vector3(1f, 1f - e.hitAlpha, 1f - e.hitAlpha);
+                drawEffect.Alpha = 1f;
+                drawEffect.World = gameCamera.worldMatrix *
+                    Matrix.CreateRotationX(e.Rotation.X + (((Turret)e).Inverted ? MathHelper.Pi : 0f)) *
+                    Matrix.CreateTranslation(new Vector3(0, ((Turret)e).Inverted?4f:-3f, 0)) *
+                        Matrix.CreateRotationZ(e.Rotation.Z + (((Turret)e).barrelRot + MathHelper.PiOver2)) *
+                        
+                        Matrix.CreateRotationY(e.Rotation.Y) *
+                        //Matrix.CreateRotationZ(e.Rotation.Z) *
+                        Matrix.CreateScale(e.Scale) *
+                        Matrix.CreateTranslation(e.Position + new Vector3(0, ((Turret)e).Inverted ? -4f : 3f, 0));
+                        
+
+                foreach (EffectPass pass in drawEffect.CurrentTechnique.Passes)
+                {
+                    pass.Apply();
+
+
+                    graphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalColor>(PrimitiveType.TriangleList, e.spriteSheet.AnimChunks[1].VertexArray, 0, e.spriteSheet.AnimChunks[1].VertexArray.Length, e.spriteSheet.AnimChunks[1].IndexArray, 0, e.spriteSheet.AnimChunks[1].VertexArray.Length / 2);
+
+                }
+            }
 		}
 
 

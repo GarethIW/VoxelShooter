@@ -39,8 +39,8 @@ namespace VoxelShooter
         Vector3 orbPosition;
         Vector3 orbRotation;
 
-        //float[] xpLevels = new float[] { 6f, 18f, 40f, 68f, 100f };
-        float[] xpLevels = new float[] { 1f, 2f, 3f, 4f, 5f };
+        public float[] xpLevels = new float[] { 6f, 18f, 40f, 68f, 100f };
+        //public float[] xpLevels = new float[] { 1f, 3f, 5f, 8f, 10f };
 
         public Hero()
         {

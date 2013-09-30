@@ -13,7 +13,7 @@ namespace VoxelShooter
         public int Y_SIZE;
         public int Z_SIZE;
 
-        const double REDRAW_INTERVAL = 0;
+        const double REDRAW_INTERVAL = 10;
 
         public Chunk[, ,] Chunks;
 
@@ -56,7 +56,7 @@ namespace VoxelShooter
             redrawTime += gameTime.ElapsedGameTime.TotalMilliseconds;
             if (redrawTime > REDRAW_INTERVAL)
             {
-                for(int i=0;i<3;i++)
+                for(int i=0;i<1;i++)
                 {
                     if (updateQueue.Count > 0)
                     {
@@ -100,7 +100,9 @@ namespace VoxelShooter
 
         public void Explode(Vector3 pos, float radius)
         {
+
             BoundingSphere sphere = new BoundingSphere(pos, radius);
+            int count = 0;
             for (float x = pos.X - radius; x < pos.X + radius; x += Voxel.SIZE)
                 for (float y = pos.Y - radius; y < pos.Y + radius; y += Voxel.SIZE)
                     for (float z = pos.Z - radius; z < pos.Z + radius; z += Voxel.SIZE)
@@ -116,7 +118,11 @@ namespace VoxelShooter
                             if (v.Active && (v.Destructable > 0 || v.Type == VoxelType.Ground))
                             {
                                 SetVoxelActive((int)world.X, (int)world.Y, (int)world.Z, false);
-                                if (Helper.Random.Next(40) == 1) ParticleController.Instance.Spawn(screen, new Vector3(-0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -0.05f + ((float)Helper.Random.NextDouble() * 0.1f),  -1f + ((float)Helper.Random.NextDouble() * 2f)), 0.5f, new Color(v.SR, v.SG, v.SB), 1000, false);
+                                if (Helper.Random.Next(count < 5 ? 5 : 100) == 1)
+                                {
+                                    ParticleController.Instance.Spawn(screen, new Vector3(-0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -0.05f + ((float)Helper.Random.NextDouble() * 0.1f), -1f + ((float)Helper.Random.NextDouble() * 2f)), 0.5f, new Color(v.SR, v.SG, v.SB), 1000, false);
+                                    count++;
+                                }
                             }
                         }
                     }

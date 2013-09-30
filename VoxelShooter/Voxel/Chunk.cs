@@ -138,12 +138,12 @@ namespace VoxelShooter
 
             for (int i = 0; i < 9; i++) lightingDirs[i] = false;
 
-            for (int zz = 0; zz < 6; zz++)
+            for (int zz = 0; zz < 4; zz++)
             {
-                float intensity = (intensityFactor / 6f) * (6f - (float)zz);
+                float intensity = (intensityFactor / 4f) * (4f - (float)zz);
                 if ((!lightingDirs[0]) && IsVoxelAt(x, y, z - zz)) { light -= (intensity * 4f); lightingDirs[0] = true; }
-                if ((!lightingDirs[0]) && IsVoxelAt(x, y, z - (zz + 5))) { light -= intensity; lightingDirs[0] = true; }
-                if ((!lightingDirs[0]) && IsVoxelAt(x, y, z - (zz + 10))) { light -= intensity; lightingDirs[0] = true; }
+                //if ((!lightingDirs[0]) && IsVoxelAt(x, y, z - (zz + 5))) { light -= intensity; lightingDirs[0] = true; }
+                //if ((!lightingDirs[0]) && IsVoxelAt(x, y, z - (zz + 10))) { light -= intensity; lightingDirs[0] = true; }
                 if ((!lightingDirs[1]) && IsVoxelAt(x - zz, y - zz, z - zz)) { light -= intensity; lightingDirs[1] = true; }
                 if ((!lightingDirs[2]) && IsVoxelAt(x, y - zz, z - zz)) { light -= intensity; lightingDirs[2] = true; }
                 if ((!lightingDirs[3]) && IsVoxelAt(x + zz, y - zz, z - zz)) { light -= intensity; lightingDirs[3] = true; }
