@@ -238,5 +238,23 @@
     <property name="Inverted" value=""/>
    </properties>
   </object>
+  <object name="Omega" x="2752" y="48" width="16" height="16">
+   <properties>
+    <property name="Count" value="10"/>
+    <property name="IsWave" value=""/>
+   </properties>
+  </object>
+  <object name="Omega" x="4929" y="95" width="16" height="16">
+   <properties>
+    <property name="Count" value="10"/>
+    <property name="IsWave" value=""/>
+   </properties>
+  </object>
+  <object name="Omega" x="5552" y="32" width="16" height="16">
+   <properties>
+    <property name="Count" value="10"/>
+    <property name="IsWave" value=""/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
