@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Enemies\Squid.cs" />
     <Compile Include="Enemies\Turret.cs" />
     <Compile Include="Powerup.cs" />
     <Compile Include="PowerupController.cs" />

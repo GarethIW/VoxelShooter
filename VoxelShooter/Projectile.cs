@@ -115,7 +115,7 @@ namespace VoxelShooter
                 case ProjectileType.Laser3:
                 case ProjectileType.Laser4:
                 case ProjectileType.Rocket:
-                    for (float d = 0f; d < 1f; d += 0.25f)
+                    for (float d = 0f; d < 1f; d += 0.1f)
                     {
                         if (!Active) continue;
 

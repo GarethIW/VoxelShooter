@@ -22,7 +22,7 @@ namespace VoxelShooter
             if (Inverted) Rotation.Z = MathHelper.Pi;
 
             Speed = Vector3.Zero;
-            Health = 3f;
+            Health = 50f;
 
             attackRate = 1000;
         }
@@ -32,7 +32,7 @@ namespace VoxelShooter
             base.Die();
 
             if(Health<=0f)
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 15; i++)
                     PowerupController.Instance.Spawn(Position + new Vector3(Helper.RandomFloat(-3f, 3f), Helper.RandomFloat(-3f, 3f), 0f));
         }
 

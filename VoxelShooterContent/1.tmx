@@ -205,22 +205,22 @@
   <object name="Asteroid" x="5072" y="141" width="16" height="16"/>
   <object name="Asteroid" x="5056" y="93" width="16" height="16"/>
   <object name="Asteroid" x="5104" y="125" width="16" height="16"/>
-  <object name="Turret" x="2016" y="95" width="16" height="16"/>
-  <object name="Turret" x="2239" y="127" width="16" height="16"/>
-  <object name="Turret" x="3073" y="95" width="16" height="16"/>
-  <object name="Turret" x="3169" y="63" width="16" height="16">
+  <object name="Turret" x="2016" y="96" width="16" height="16"/>
+  <object name="Turret" x="2240" y="128" width="16" height="16"/>
+  <object name="Turret" x="3072" y="96" width="16" height="16"/>
+  <object name="Turret" x="3168" y="64" width="16" height="16">
    <properties>
     <property name="Inverted" value=""/>
    </properties>
   </object>
-  <object name="Turret" x="3313" y="95" width="16" height="16"/>
-  <object name="Turret" x="3616" y="126" width="16" height="16"/>
-  <object name="Turret" x="3423" y="63" width="16" height="16">
+  <object name="Turret" x="3312" y="96" width="16" height="16"/>
+  <object name="Turret" x="3616" y="128" width="16" height="16"/>
+  <object name="Turret" x="3424" y="64" width="16" height="16">
    <properties>
     <property name="Inverted" value=""/>
    </properties>
   </object>
-  <object name="Turret" x="3519" y="48" width="16" height="16">
+  <object name="Turret" x="3520" y="48" width="16" height="16">
    <properties>
     <property name="Inverted" value=""/>
    </properties>
@@ -232,8 +232,8 @@
   </object>
   <object name="Turret" x="3857" y="143" width="16" height="16"/>
   <object name="Turret" x="4014" y="142" width="16" height="16"/>
-  <object name="Turret" x="4256" y="63" width="16" height="16"/>
-  <object name="Turret" x="4417" y="95" width="16" height="16">
+  <object name="Turret" x="4256" y="64" width="16" height="16"/>
+  <object name="Turret" x="4416" y="96" width="16" height="16">
    <properties>
     <property name="Inverted" value=""/>
    </properties>
@@ -254,6 +254,46 @@
    <properties>
     <property name="Count" value="10"/>
     <property name="IsWave" value=""/>
+   </properties>
+  </object>
+  <object name="Squid" x="3776" y="48" width="16" height="16">
+   <properties>
+    <property name="Count" value="1"/>
+    <property name="EndX" value="20"/>
+    <property name="EndY" value="30"/>
+    <property name="IsWave" value="Line"/>
+   </properties>
+  </object>
+  <object name="Squid" x="3776" y="112" width="16" height="16">
+   <properties>
+    <property name="Count" value="1"/>
+    <property name="EndX" value="20"/>
+    <property name="EndY" value="-30"/>
+    <property name="IsWave" value="Line"/>
+   </properties>
+  </object>
+  <object name="Squid" x="3904" y="48" width="16" height="16">
+   <properties>
+    <property name="Count" value="4"/>
+    <property name="EndX" value="20"/>
+    <property name="EndY" value="40"/>
+    <property name="IsWave" value="Line"/>
+   </properties>
+  </object>
+  <object name="Squid" x="4064" y="64" width="16" height="16">
+   <properties>
+    <property name="Count" value="6"/>
+    <property name="EndX" value="-30"/>
+    <property name="EndY" value="50"/>
+    <property name="IsWave" value="Line"/>
+   </properties>
+  </object>
+  <object name="Squid" x="3520" y="80" width="16" height="16">
+   <properties>
+    <property name="Count" value="2"/>
+    <property name="EndX" value="0"/>
+    <property name="EndY" value="30"/>
+    <property name="IsWave" value="Line"/>
    </properties>
   </object>
  </objectgroup>

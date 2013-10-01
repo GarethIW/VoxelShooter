@@ -14,7 +14,8 @@ namespace VoxelShooter
 	{
 		Asteroid,
         Omega,
-        Turret
+        Turret,
+        Squid
 	}
 
 	public class EnemyController
@@ -55,6 +56,9 @@ namespace VoxelShooter
             VoxelSprite turret = new VoxelSprite(15, 15, 15);
             LoadVoxels.LoadSprite(Path.Combine(content.RootDirectory, "enemies", "turret.vxs"), ref turret);
             spriteSheets.Add("Turret", turret);
+            VoxelSprite squid = new VoxelSprite(15, 15, 15);
+            LoadVoxels.LoadSprite(Path.Combine(content.RootDirectory, "enemies", "squid.vxs"), ref squid);
+            spriteSheets.Add("Squid", squid);
 
             foreach (MapObject o in spawnLayer.Objects) Spawns.Add(o);
 		}
@@ -73,6 +77,9 @@ namespace VoxelShooter
                 case EnemyType.Turret:
                     e = new Turret(pos, spriteSheets["Turret"], props.Contains("Inverted"));
                     break;
+                case EnemyType.Squid:
+                    e = new Squid(pos, spriteSheets["Squid"]);
+                    break;
 			}
 
             Enemies.Add(e);
@@ -88,7 +95,18 @@ namespace VoxelShooter
                 {
                     if (Spawns[i].Properties.Contains("IsWave"))
                     {
-                        Wave w = new Wave(gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 10), WaveType.Circle, (EnemyType)Enum.Parse(typeof(EnemyType), Spawns[i].Name), Convert.ToInt16(Spawns[i].Properties["Count"]), Spawns[i].Properties);
+                        Wave w;
+                        switch (Spawns[i].Properties["IsWave"])
+                        {
+                            case "Line":
+                                w = new Wave(gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 10), WaveType.Line, (EnemyType)Enum.Parse(typeof(EnemyType), Spawns[i].Name), Convert.ToInt16(Spawns[i].Properties["Count"]), Spawns[i].Properties);
+                                
+                                break;
+                            default:
+                                w = new Wave(gameWorld.ToScreenSpace(Spawns[i].Location.Center.X, Spawns[i].Location.Center.Y, 10), WaveType.Circle, (EnemyType)Enum.Parse(typeof(EnemyType), Spawns[i].Name), Convert.ToInt16(Spawns[i].Properties["Count"]), Spawns[i].Properties);
+                                
+                                break;
+                        }
                         Waves.Add(w);
                     }
                     else
