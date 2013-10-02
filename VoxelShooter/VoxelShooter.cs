@@ -67,8 +67,9 @@ namespace VoxelShooter
         /// </summary>
         protected override void Initialize()
         {
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
+            graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
             base.Initialize();
@@ -142,7 +143,7 @@ namespace VoxelShooter
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
             if (!IsActive) return;
@@ -250,14 +251,16 @@ namespace VoxelShooter
             particleController.Draw();
             powerupController.Draw();
 
+            Vector2 offset = new Vector2(0, GraphicsDevice.Viewport.Height - 720) / 2;
+
             spriteBatch.Begin();
-            spriteBatch.Draw(hudTex, new Vector2(16, 16), new Rectangle(0, 0, 16, 688), Color.White * 0.2f);
-            spriteBatch.Draw(hudTex, new Vector2(40, 16), new Rectangle(32, 0, 16, 688), Color.White * 0.2f);
-            spriteBatch.Draw(hudTex, new Vector2(16, 16 + (int)((688f / 100f) * (100f - gameHero.Health))), new Rectangle(0, 0, 16, (int)((688f / 100f) * (gameHero.Health))), Color.White);
-            spriteBatch.Draw(hudTex, new Vector2(40, 16 + (int)((688f / 100f) * (100f - gameHero.XP))), new Rectangle(32, 0, 16, (int)((688f / 100f) * (gameHero.XP))), Color.White);
+            spriteBatch.Draw(hudTex, new Vector2(16, 16) + offset, new Rectangle(0, 0, 16, 688), Color.White * 0.2f);
+            spriteBatch.Draw(hudTex, new Vector2(40, 16) + offset, new Rectangle(32, 0, 16, 688), Color.White * 0.2f);
+            spriteBatch.Draw(hudTex, new Vector2(16, 16 + (int)((688f / 100f) * (100f - gameHero.Health))) + offset, new Rectangle(0, 0, 16, (int)((688f / 100f) * (gameHero.Health))), Color.White);
+            spriteBatch.Draw(hudTex, new Vector2(40, 16 + (int)((688f / 100f) * (100f - gameHero.XP))) + offset, new Rectangle(32, 0, 16, (int)((688f / 100f) * (gameHero.XP))), Color.White);
             for (int i = 0; i < 5; i++)
             {
-                spriteBatch.Draw(hudTex, new Vector2(40, 16 + (int)((688f / 100f) * (100f - gameHero.xpLevels[i]))), new Rectangle(64, 0, 16, 1), Color.White);
+                spriteBatch.Draw(hudTex, new Vector2(40, 16 + (int)((688f / 100f) * (100f - gameHero.xpLevels[i]))) + offset, new Rectangle(64, 0, 16, 1), Color.White);
 
             }
             //spriteBatch.DrawString(font, gameHero.XP.ToString("0.00"), Vector2.One * 5, Color.White);
