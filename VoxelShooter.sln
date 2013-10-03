@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiledLib", "TiledLib\TiledL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiledContentPipeline", "TiledContentPipeline\TiledContentPipeline.csproj", "{394F4B34-82C0-4E79-8537-5FA3AC60DEF9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiledLib.Mono.Windows", "TiledLib.Mono.Windows\TiledLib.Mono.Windows.csproj", "{C8FCE249-106B-4984-92BC-668E6EA7E25F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoxelShooter.Mono.Windows", "VoxelShooter.Mono.Windows\VoxelShooter.Mono.Windows.csproj", "{94756970-338A-4F7C-8A02-05268FBDCE11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -29,6 +33,14 @@ Global
 		{394F4B34-82C0-4E79-8537-5FA3AC60DEF9}.Debug|x86.Build.0 = Debug|x86
 		{394F4B34-82C0-4E79-8537-5FA3AC60DEF9}.Release|x86.ActiveCfg = Release|x86
 		{394F4B34-82C0-4E79-8537-5FA3AC60DEF9}.Release|x86.Build.0 = Release|x86
+		{C8FCE249-106B-4984-92BC-668E6EA7E25F}.Debug|x86.ActiveCfg = Debug|x86
+		{C8FCE249-106B-4984-92BC-668E6EA7E25F}.Debug|x86.Build.0 = Debug|x86
+		{C8FCE249-106B-4984-92BC-668E6EA7E25F}.Release|x86.ActiveCfg = Release|x86
+		{C8FCE249-106B-4984-92BC-668E6EA7E25F}.Release|x86.Build.0 = Release|x86
+		{94756970-338A-4F7C-8A02-05268FBDCE11}.Debug|x86.ActiveCfg = Debug|x86
+		{94756970-338A-4F7C-8A02-05268FBDCE11}.Debug|x86.Build.0 = Debug|x86
+		{94756970-338A-4F7C-8A02-05268FBDCE11}.Release|x86.ActiveCfg = Release|x86
+		{94756970-338A-4F7C-8A02-05268FBDCE11}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

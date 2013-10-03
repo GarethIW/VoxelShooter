@@ -118,7 +118,7 @@ namespace VoxelShooter
             hitAlpha = 1f;
 
             if (proj != null) // A null projectile means an enemy collided with the player
-                Health -= proj.Damage;
+                Health -= proj.Damage/2f;
             else
                 Health -= 0.1f;
         }
@@ -211,7 +211,7 @@ namespace VoxelShooter
                             
                         }
 
-                        if (powerupLevel >= 5)
+                        if (powerupLevel >= 4)
                         {
                             if(fireswitch==0) ProjectileController.Instance.Spawn(ProjectileType.Laser4, this, new Vector3(Helper.PointOnCircle(ref v2Pos, 3f, -MathHelper.PiOver2), Position.Z), Matrix.CreateRotationZ(-MathHelper.PiOver2) * Matrix.CreateRotationY(MathHelper.PiOver2), new Vector3(Helper.AngleToVector(-MathHelper.PiOver2, 3f), 0f), 5f, 2000, false);
                             else ProjectileController.Instance.Spawn(ProjectileType.Laser4, this, new Vector3(Helper.PointOnCircle(ref v2Pos, 3f, MathHelper.PiOver2), Position.Z), Matrix.CreateRotationZ(MathHelper.PiOver2) * Matrix.CreateRotationY(MathHelper.PiOver2), new Vector3(Helper.AngleToVector(MathHelper.PiOver2, 3f), 0f), 5f, 2000, false);
@@ -224,7 +224,7 @@ namespace VoxelShooter
                     break;
             }
 
-            if (powerupLevel >= 4)
+            if (powerupLevel >= 5)
             {
                 if (rocketCooldown <= 0)
                 {

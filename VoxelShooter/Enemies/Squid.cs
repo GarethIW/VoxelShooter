@@ -31,7 +31,7 @@ namespace VoxelShooter
 
             if (Position.Z <=5f)
             {
-                ProjectileController.Instance.Spawn(ProjectileType.Laser2, this, Position, Matrix.Identity, new Vector3(-2f, 0f, 0f), 3f, 2000, false);
+                ProjectileController.Instance.Spawn(ProjectileType.Laser2, this, Position, Matrix.CreateRotationZ(MathHelper.Pi), new Vector3(-2f, 0f, 0f), 3f, 2000, false);
             }
         }
 

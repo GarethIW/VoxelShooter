@@ -35,7 +35,7 @@ namespace VoxelShooter
 
             if(Vector3.Distance(gameHero.Position, Position) < 3f)
             {
-                gameHero.XP += 0.1f;
+                gameHero.XP += 0.15f;
                 Active = false;
             }
         }
